@@ -12,7 +12,7 @@ export const useFollow = () => {
 
   const getFollowers = async (id: number) => {
     const response = await axiosIntelisen.get(`/follow/${id}`);
-    console.log("data", response);
+    // console.log("data", response);
     setFollowers(response.data.follower);
     setFollowing(response.data.following);
   };

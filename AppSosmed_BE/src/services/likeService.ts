@@ -1,13 +1,22 @@
-import { Repository } from "typeorm";
+import { Equal, Repository } from "typeorm";
 import { Like } from "../entity/Like";
 import { AppDataSource } from "../data-source";
+import ResponsError from "../error/responsError";
 
 export default new (class LikeService {
   private readonly likeRepo: Repository<Like> =
     AppDataSource.getRepository(Like);
 
   async likeThread(threadId, sessionId) {
-    const response = await this.likeRepo.save({
+    const chk = await this.likeRepo.count({
+      where: {
+        thread: Equal(threadId),
+        author: Equal(sessionId),
+      },
+    });
+
+    if (chk) throw new ResponsError(400, "You cannot like this Thread twice!");
+    await this.likeRepo.save({
       thread: threadId,
       author: sessionId,
     });
@@ -17,7 +26,14 @@ export default new (class LikeService {
   }
 
   async likeReply(replyId, sessionId) {
-    this.likeRepo.save({
+    const chk = await this.likeRepo.count({
+      where: {
+        reply: Equal(replyId),
+        author: Equal(sessionId),
+      },
+    });
+    if (chk) throw new ResponsError(400, "You cannot like this Reply twice!");
+    await this.likeRepo.save({
       reply: replyId,
       author: sessionId,
     });
@@ -56,8 +72,9 @@ export default new (class LikeService {
       .where("like.thread = :thread", { thread: id })
       .andWhere("like.author = :author", { author: session })
       .getOne();
-
+    if (!getLike) throw new ResponsError(404, "You already unlike this Thread");
     await this.likeRepo.delete(getLike.id);
+
     return {
       message: "Unliked",
     };
@@ -71,6 +88,8 @@ export default new (class LikeService {
       .where("like.reply = :reply", { reply: id })
       .andWhere("like.author = :author", { author: session })
       .getOne();
+
+    if (!getLike) throw new ResponsError(404, "You already unlike this Reply");
 
     await this.likeRepo.delete(getLike.id);
     return {

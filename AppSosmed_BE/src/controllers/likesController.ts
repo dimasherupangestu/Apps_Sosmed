@@ -11,7 +11,7 @@ export default new (class LikeController {
 
       res.status(200).json(response);
     } catch (error) {
-      res.status(500).json({ message: "Error while liking thread" });
+      res.status(error.status).json({ message: error.message });
     }
   }
 
@@ -24,7 +24,7 @@ export default new (class LikeController {
 
       res.status(200).json(response);
     } catch (error) {
-      res.status(500).json({ message: "Error while liking reply" });
+      res.status(error.status).json({ message: error.message });
     }
   }
 

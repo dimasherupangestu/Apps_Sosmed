@@ -50,32 +50,6 @@ export const BoxRecomen = () => {
         <Text color={"white"} fontWeight={600}>
           Suggested for you
         </Text>
-        {/* {data &&
-          data.map((userData) => (
-            <HStack key={userData.username} mt={4}>
-              <Avatar name={userData.name} src={userData.picture} />
-              <Text color={"white"} fontSize={"0.9rem"}>
-                {userData.username}
-                <Text color={"gray.400"} fontSize={"0.7rem"}>
-                  @{userData.username}
-                </Text>
-              </Text>
-              <Button
-                border={"1px solid #555"}
-                bg={"none"}
-                color={"gray.400"}
-                w={"5.3rem"}
-                px={4}
-                h={"2rem"}
-                ml={"auto"}
-                borderRadius={"20px"}
-                fontSize={"0.9rem"}
-                _hover={{ bg: "green.500", color: "white" }}
-              >
-                Follow
-              </Button>
-            </HStack>
-          ))} */}
 
         {data?.map((data: AuthorProps, index: number) => (
           <Box key={index}>

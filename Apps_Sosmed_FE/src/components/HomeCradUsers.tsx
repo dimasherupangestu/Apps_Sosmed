@@ -16,10 +16,10 @@ import {
 import { AiFillHeart } from "react-icons/ai";
 import { CgComment } from "react-icons/cg";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useFetchChatUser } from "../features/ChatUser/useFetchChatUser";
 import { ChatUserProps } from "../types/TypeData";
 import { SlOptions } from "react-icons/sl";
 import { axiosIntelisen } from "../lib/axios";
+import { useFetchChatUser } from "../features/Thread/useFetchChatUser";
 
 export const HomeCradUsers: React.FC = () => {
   // const id = useParams.id!;
@@ -42,47 +42,19 @@ export const HomeCradUsers: React.FC = () => {
     });
     return timeConvert;
   };
-  const { data, isLoading: useFetchChat } = useFetchChatUser();
-
-  const hendelDelete = async (id: number, id_user: number) => {
-    // console.log(id);
-    if (getIdUser !== id_user) {
-      tost({
-        title: "This is not your author",
-        status: "info",
-        position: "top",
-      });
-    } else if (getIdUser) {
-      try {
-        const response = await axiosIntelisen.delete(`/thread/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        tost({
-          title: "Delete success",
-          status: "info",
-          position: "top",
-        });
-        window.location.reload();
-        // console.log("delete", response);
-      } catch (err) {
-        throw err;
-      }
-    } else {
-      tost({
-        title: "Please Login first",
-        status: "info",
-        position: "top",
-      });
-      // naviget("/login");
-    }
-  };
-  // const { id, name, username, defcription, avatar, jam, like, image } = props;
+  const {
+    data,
+    isLoading: useFetchChat,
+    dataThread,
+    hendelLike,
+    hendelDelete,
+    hendelUnlike,
+    isLike,
+  } = useFetchChatUser();
 
   return (
     <Box w={"100%"} h={"100%"}>
-      {data?.data.map((data: ChatUserProps) => (
+      {dataThread.map((data: ChatUserProps) => (
         <Box mt={5} borderBottom={"1px solid #555"} key={data.id}>
           {useFetchChat && <Spinner color="white" size={"lg"} />}
           <HStack px={7} py={4}>
@@ -90,17 +62,17 @@ export const HomeCradUsers: React.FC = () => {
               <Box>
                 {data.author.picture ? (
                   <Avatar
-                    name="Dan Abrahmov"
+                    name={data.author.name}
                     size="md"
                     src={data.author.picture}
                   />
                 ) : (
-                  <Avatar name={data.author.name} size="md" bg={"green.500"} />
+                  <Avatar name={data.author.name} size="md" />
                 )}
               </Box>
             </Box>
             <Box ml={2} w={"100%"}>
-              <HStack>
+              <HStack wrap={"wrap"}>
                 <Heading
                   fontSize={["0.7rem", "0.8rem", "0.9rem"]}
                   color={"white"}
@@ -116,7 +88,7 @@ export const HomeCradUsers: React.FC = () => {
                 </Text>
                 <Text
                   color={"RGBA(255, 255, 255, 0.48)"}
-                  fontSize={{ base: "0.6rem", md: "0.7rem" }}
+                  fontSize={{ base: "0.5rem", md: "0.7rem" }}
                 >
                   {convertDate(data?.created_at)}
                 </Text>
@@ -155,36 +127,60 @@ export const HomeCradUsers: React.FC = () => {
                   />
                 </Box>
               )}
-              <Link key={data.id} to={`/detailStatus/${data.id}`}>
-                <HStack mt={2}>
-                  <Box
-                    color="red"
-                    _hover={{ color: "green", cursor: "pointer" }}
-                  >
-                    <AiFillHeart size={23} />
-                  </Box>
-                  <Text
-                    color={"rgba(255, 255, 255, 0.48)"}
-                    fontSize={["0.7rem", "0.8rem"]}
-                  >
-                    {data.like}
-                    {/* {data.} */}
-                  </Text>
+              <HStack mt={2}>
+                {isLike === false ? (
+                  <HStack>
+                    <Box
+                      onClick={() => hendelLike(data.id)}
+                      color="white"
+                      _hover={{ color: "red", cursor: "pointer" }}
+                    >
+                      <AiFillHeart size={23} />
+                    </Box>
+                    <Text
+                      color={"rgba(255, 255, 255, 0.48)"}
+                      fontSize={["0.7rem", "0.8rem"]}
+                    >
+                      {data.like}
+                      {/* {data.} */}
+                    </Text>
+                  </HStack>
+                ) : (
+                  <HStack>
+                    <Box
+                      onClick={() => hendelUnlike(data.id)}
+                      color="red"
+                      _hover={{ color: "white", cursor: "pointer" }}
+                    >
+                      <AiFillHeart size={23} />
+                    </Box>
+                    <Text
+                      color={"rgba(255, 255, 255, 0.48)"}
+                      fontSize={["0.7rem", "0.8rem"]}
+                    >
+                      {data.like}
+                      {/* {data.} */}
+                    </Text>
+                  </HStack>
+                )}
 
-                  <Box
-                    color="white"
-                    _hover={{ color: "green", cursor: "pointer" }}
-                  >
-                    <CgComment size={23} />
-                  </Box>
-                  <Text
-                    color={"rgba(255, 255, 255, 0.48)"}
-                    fontSize={["0.7rem", "0.8rem"]}
-                  >
-                    {data.replies} Reples
-                  </Text>
-                </HStack>
-              </Link>
+                <Link key={data.id} to={`/detailStatus/${data.id}`}>
+                  <HStack>
+                    <Box
+                      color="white"
+                      _hover={{ color: "green", cursor: "pointer" }}
+                    >
+                      <CgComment size={23} />
+                    </Box>
+                    <Text
+                      color={"rgba(255, 255, 255, 0.48)"}
+                      fontSize={["0.7rem", "0.8rem"]}
+                    >
+                      {data.replies} Reples
+                    </Text>
+                  </HStack>
+                </Link>
+              </HStack>
             </Box>
           </HStack>
         </Box>

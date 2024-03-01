@@ -54,5 +54,15 @@ routes.get("/follow/:id", followersController.getFollower);
 // Like API
 routes.post("/like/thread", AuthMiddleware.auth, likesController.likeThread);
 routes.post("/like/reply", AuthMiddleware.auth, likesController.likeReply);
+routes.delete(
+  "/unlike/thread",
+  AuthMiddleware.auth,
+  likesController.unlikeThread
+);
+routes.delete(
+  "/unlike/reply",
+  AuthMiddleware.auth,
+  likesController.unlikeReply
+);
 
 export default routes;

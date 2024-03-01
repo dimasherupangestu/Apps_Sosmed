@@ -77,7 +77,6 @@ export const ProfileSlideBar = () => {
         <Avatar
           src={user.picture}
           name={user.name}
-          bg={"green.500"}
           border="1px solid #555"
           ml={"20px"}
           borderColor={boxBg}
