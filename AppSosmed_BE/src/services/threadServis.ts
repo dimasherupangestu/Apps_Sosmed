@@ -38,7 +38,7 @@ export default new (class threadServis {
     const like = response.map(
       async (val) => await likeService.getLikeThread(val.id, id)
     );
-    console.log("like", like);
+    // console.log("like", like);
 
     const thread = [];
     let i = 0;
@@ -93,14 +93,14 @@ export default new (class threadServis {
   }
   async createThread(data) {
     const isvalidate = validate(createThreadSchema, data);
-    console.log("data", data);
+    // console.log("data", data);
 
     let valid;
 
     if (data.image) {
       cloudinary.upload();
       const upFile = await cloudinary.destination(isvalidate.image);
-      console.log("ini upfile", upFile);
+      // console.log("ini upfile", upFile);
       valid = {
         content: isvalidate.content,
         image: upFile.secure_url,
@@ -112,7 +112,7 @@ export default new (class threadServis {
         author: isvalidate.author,
       };
     }
-    console.log("valid nih", valid);
+    // console.log("valid nih", valid);
 
     const response = await this.threadRepository.save(valid);
     return {

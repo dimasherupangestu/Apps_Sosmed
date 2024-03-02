@@ -20,12 +20,17 @@ import { ChatUserProps } from "../types/TypeData";
 import { SlOptions } from "react-icons/sl";
 import { axiosIntelisen } from "../lib/axios";
 import { useFetchChatUser } from "../features/Thread/useFetchChatUser";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootType } from "../types/storeType";
 
 export const HomeCradUsers: React.FC = () => {
   // const id = useParams.id!;
   const token = localStorage.getItem("token");
   const getIdUser = Number(localStorage.getItem("id"));
-  // console.log("userlogin", getIdUser);
+  const thread = useSelector((state: RootType) => state.GetThread.data);
+  const user = useSelector((state: RootType) => state.userStore);
+  // console.log("data", dataThread);
 
   const tost = useToast();
   const naviget = useNavigate();
@@ -42,21 +47,16 @@ export const HomeCradUsers: React.FC = () => {
     });
     return timeConvert;
   };
-  const {
-    data,
-    isLoading: useFetchChat,
-    dataThread,
-    hendelLike,
-    hendelDelete,
-    hendelUnlike,
-    isLike,
-  } = useFetchChatUser();
-
+  const { useGetThread, hendelLike, hendelDelete, hendelUnlike, isLike } =
+    useFetchChatUser();
+  useEffect(() => {
+    if (!token) return;
+    useGetThread(user.id);
+  }, []);
   return (
     <Box w={"100%"} h={"100%"}>
-      {dataThread.map((data: ChatUserProps) => (
+      {thread.map((data: any) => (
         <Box mt={5} borderBottom={"1px solid #555"} key={data.id}>
-          {useFetchChat && <Spinner color="white" size={"lg"} />}
           <HStack px={7} py={4}>
             <Box w={""} mb={"auto"}>
               <Box>
@@ -122,13 +122,13 @@ export const HomeCradUsers: React.FC = () => {
                   <Image
                     boxSize="full"
                     objectFit="cover"
-                    src={data.image}
+                    src={data.image[0]}
                     alt="image"
                   />
                 </Box>
               )}
               <HStack mt={2}>
-                {isLike === false ? (
+                {isLike == false ? (
                   <HStack>
                     <Box
                       onClick={() => hendelLike(data.id)}

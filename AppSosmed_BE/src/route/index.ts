@@ -65,4 +65,6 @@ routes.delete(
   likesController.unlikeReply
 );
 
+// routes.post("/thread/:threadId/like", AuthMiddleware.auth, likesController.createLikeThread);
+
 export default routes;

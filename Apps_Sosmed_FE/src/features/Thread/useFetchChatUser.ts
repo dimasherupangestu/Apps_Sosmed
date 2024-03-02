@@ -3,27 +3,39 @@ import { axiosIntelisen } from "../../lib/axios";
 import { useState } from "react";
 import { ChatUserProps } from "../../types/TypeData";
 import { useToast } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootType } from "../../types/storeType";
+import { GET_THREAD } from "../../store/Slice/useSliceThered";
 
 export const useFetchChatUser = () => {
   const [dataThread, setDataThread] = useState<ChatUserProps[]>([]);
+  const dispatch = useDispatch();
   const token = localStorage.getItem("token");
   const tost = useToast();
   const [isLike, setIsLike] = useState(false);
+  console.log("usestate", isLike);
   const getIdUser = useSelector((state: RootType) => state.userStore.id);
 
-  const { data, isLoading } = useQuery({
-    queryFn: async () => {
-      const response = await axiosIntelisen.get("/thread");
-      console.log(response);
+  // const { data,  } = useQuery({
+  //   queryFn: async () => {
+  //     const response = await axiosIntelisen.get("/thread");
+  //     console.log(response);
+  //     setDataThread(response.data);
+
+  //     return response.data;
+  //   },
+  //   queryKey: ["chatUser"],
+  // });
+
+  const useGetThread = async (id: number) => {
+    try {
+      const response = await axiosIntelisen.get(`/thread?id=${id}`);
+      dispatch(GET_THREAD({ data: response.data }));
       setDataThread(response.data);
-
-      return response.data;
-    },
-    queryKey: ["chatUser"],
-  });
-
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const hendelLike = async (id: number) => {
     try {
       const response = await axiosIntelisen.post(
@@ -35,11 +47,8 @@ export const useFetchChatUser = () => {
           },
         }
       );
-      setIsLike(true);
 
-      console.log("like", response);
-      console.log("data.id", id);
-      alert("success");
+      useGetThread(id);
     } catch (err) {
       console.log(err);
     }
@@ -60,8 +69,7 @@ export const useFetchChatUser = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setIsLike(true);
-      console.log("unlike", response);
+      useGetThread(id);
     } catch (err) {
       console.log(err);
     }
@@ -103,12 +111,12 @@ export const useFetchChatUser = () => {
     }
   };
   return {
-    data,
-    isLoading,
+    useGetThread,
     hendelLike,
-    dataThread,
     hendelDelete,
     hendelUnlike,
     isLike,
+    setDataThread,
+    dataThread,
   };
 };

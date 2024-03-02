@@ -56,13 +56,11 @@ export default new (class AuthService {
       },
     });
     if (!chkUser) throw new ResponsError(400, "username not registed!");
-    
 
     const isMatch = await bcrypt.compare(isValid.password, chkUser.password);
     if (!isMatch) throw new ResponsError(400, "password wrong!");
-console.log(process.env.SECRET_KEY)    
+    // console.log(process.env.SECRET_KEY)
     const token = jwt.sign(
-
       { id: chkUser.id, username: chkUser.username },
       process.env.SECRET_KEY,
       {

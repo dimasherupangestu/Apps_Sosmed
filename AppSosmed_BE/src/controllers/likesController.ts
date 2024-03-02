@@ -41,6 +41,15 @@ export default new (class LikeController {
     }
   }
 
+  // async createLikeThread(req: Request, res: Response) {
+  //   try {
+  //     const response = await likeService.likeThread(req, res);
+  //     return res.status(200).json(response);
+  //   } catch (error) {
+  //     return res.status(error.status).json(error.message);
+  //   }
+  // }
+
   async unlikeReply(req: Request, res: Response) {
     try {
       const response = await likeService.unlikeReply(

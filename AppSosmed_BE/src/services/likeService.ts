@@ -2,6 +2,8 @@ import { Equal, Repository } from "typeorm";
 import { Like } from "../entity/Like";
 import { AppDataSource } from "../data-source";
 import ResponsError from "../error/responsError";
+import { Request, Response } from "express";
+import { createLikeThread } from "../utils/Validator/likeValidator";
 
 export default new (class LikeService {
   private readonly likeRepo: Repository<Like> =
@@ -16,6 +18,7 @@ export default new (class LikeService {
     });
 
     if (chk) throw new ResponsError(400, "You cannot like this Thread twice!");
+
     await this.likeRepo.save({
       thread: threadId,
       author: sessionId,
@@ -24,6 +27,40 @@ export default new (class LikeService {
       message: "Thread Liked",
     };
   }
+  // async likeThread(req: Request, res: Response) {
+  //   const threadId = parseInt(req.params.threadId, 10);
+  //   const data = {
+  //     threadId: threadId,
+  //   };
+  //   const { error, value } = createLikeThread.validate(data);
+  //   if (error) throw new ResponsError(400, error.message);
+
+  //   const loginSesion = res.locals.session;
+
+  //   const likeSelected = await this.likeRepo.findOne({
+  //     where: {
+  //       author: { id: loginSesion.id },
+  //       thread: { id: value.thread },
+  //     },
+  //   });
+
+  //   if (likeSelected) {
+  //     await this.likeRepo.remove(likeSelected);
+  //     return { massage: "Succes remove like!" };
+  //   }
+
+  //   const like = this.likeRepo.create({
+  //     thread: value.thread,
+  //     author: {
+  //       id: loginSesion.id,
+  //     },
+  //   });
+  //   const response = await this.likeRepo.save(like);
+  //   return {
+  //     message: "Success like!",
+  //     data: response,
+  //   };
+  // }
 
   async likeReply(replyId, sessionId) {
     const chk = await this.likeRepo.count({
