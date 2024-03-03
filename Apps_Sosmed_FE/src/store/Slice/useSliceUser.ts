@@ -15,6 +15,7 @@ export const useSliceUser = createSlice({
   },
   reducers: {
     update: (state, action) => {
+      console.log("user", action.payload);
       state.id = action.payload.id;
       state.name = action.payload.name;
       state.username = action.payload.username;

@@ -19,7 +19,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { ChatUserProps } from "../types/TypeData";
 import { SlOptions } from "react-icons/sl";
 import { axiosIntelisen } from "../lib/axios";
-import { useFetchChatUser } from "../features/Thread/useFetchChatUser";
+import { useChatUser } from "../features/Thread/useThread";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootType } from "../types/storeType";
@@ -27,7 +27,6 @@ import { RootType } from "../types/storeType";
 export const HomeCradUsers: React.FC = () => {
   // const id = useParams.id!;
   const token = localStorage.getItem("token");
-  const getIdUser = Number(localStorage.getItem("id"));
   const thread = useSelector((state: RootType) => state.GetThread.data);
   const user = useSelector((state: RootType) => state.userStore);
   // console.log("data", dataThread);
@@ -47,12 +46,12 @@ export const HomeCradUsers: React.FC = () => {
     });
     return timeConvert;
   };
-  const { useGetThread, hendelLike, hendelDelete, hendelUnlike, isLike } =
-    useFetchChatUser();
+  const { useGetThread, hendelLike, hendelDelete, hendelUnlike } =
+    useChatUser();
   useEffect(() => {
     if (!token) return;
     useGetThread(user.id);
-  }, []);
+  }, [user.id]);
   return (
     <Box w={"100%"} h={"100%"}>
       {thread.map((data: any) => (
@@ -128,7 +127,7 @@ export const HomeCradUsers: React.FC = () => {
                 </Box>
               )}
               <HStack mt={2}>
-                {isLike == false ? (
+                {!data.isLike ? (
                   <HStack>
                     <Box
                       onClick={() => hendelLike(data.id)}
