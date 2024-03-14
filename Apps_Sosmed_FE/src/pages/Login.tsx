@@ -4,12 +4,15 @@ import InputElement from "../components/InputElement";
 
 import { Link, useNavigate } from "react-router-dom";
 import { axiosIntelisen } from "../lib/axios";
+import { useDispatch } from "react-redux";
+import { setToken } from "../store/Slice/sliceToken";
 
 export const Login = () => {
   const naviget = useNavigate();
   if (localStorage.getItem("token")) {
     return (window.location.href = "/");
   }
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,7 +25,7 @@ export const Login = () => {
       });
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("id", response.data.user.id);
-      localStorage.setItem("username", response.data.user.username);
+      // dispatch(setToken(response.data.token));
 
       naviget("/");
       console.log(response);

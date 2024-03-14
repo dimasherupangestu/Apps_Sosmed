@@ -6,13 +6,11 @@ import { useToast } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootType } from "../../types/storeType";
 import { GET_THREAD } from "../../store/Slice/useSliceThered";
-import { Fetch_Thread } from "../../store/Slice/useFectTheread";
 
 export const useChatUser = () => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
   const tost = useToast();
-
   const user = useSelector((state: RootType) => state.userStore.id);
 
   // const { data,  } = useQuery({

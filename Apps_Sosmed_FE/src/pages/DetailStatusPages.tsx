@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
-import { DetailStatus } from "../components/DetailStatus";
 import { Layout } from "../layout/layout";
+import { DetailReply } from "../components/DetailReply";
 
 export const DetailStatusPages = () => {
   const { id } = useParams();
@@ -9,7 +9,7 @@ export const DetailStatusPages = () => {
   return (
     <>
       <Layout>
-        <DetailStatus />
+        <DetailReply />
       </Layout>
     </>
   );

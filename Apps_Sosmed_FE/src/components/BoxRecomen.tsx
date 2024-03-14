@@ -50,20 +50,21 @@ export const BoxRecomen = () => {
         <Text color={"white"} fontWeight={600}>
           Suggested for you
         </Text>
-
-        {data?.map((data: AuthorProps, index: number) => (
-          <Box key={index}>
-            <CardUser
-              id={data.id}
-              refect={refetch}
-              name={data.name}
-              picture={data.picture}
-              username={data.username}
-              follower={data.follower}
-              following={data.following}
-            />
-          </Box>
-        ))}
+        <Box height={"15rem"} overflowY={"scroll"}>
+          {data?.map((data: AuthorProps, index: number) => (
+            <Box key={index}>
+              <CardUser
+                id={data.id}
+                refect={refetch}
+                name={data.name}
+                picture={data.picture}
+                username={data.username}
+                follower={data.follower}
+                following={data.following}
+              />
+            </Box>
+          ))}
+        </Box>
       </Flex>
     </Box>
   );

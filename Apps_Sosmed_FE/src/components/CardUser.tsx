@@ -4,7 +4,7 @@ import { AuthorProps } from "../types/TypeData";
 import { useSelector } from "react-redux";
 import { RootType } from "../types/storeType";
 import { useMutation } from "@tanstack/react-query";
-import { axiosIntelisen, axios_Heders } from "../lib/axios";
+import { axiosIntelisen } from "../lib/axios";
 import { useFollow } from "../features/Follow/componen/hook/useFollow";
 export const CardUser = (data: any) => {
   // console.log("dataid", data.id);

@@ -50,3 +50,19 @@ export type Thread = {
     picture: string | null;
   };
 };
+
+export type ThreadOne = {
+  id: number;
+  content: string;
+  image?: any | string[];
+  likes: any;
+  isLike: boolean;
+  replies?: [];
+  created_at?: string;
+  author: {
+    id: number;
+    name: string;
+    username: string;
+    picture: any;
+  };
+};

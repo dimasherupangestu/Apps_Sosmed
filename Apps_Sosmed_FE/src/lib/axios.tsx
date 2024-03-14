@@ -1,17 +1,19 @@
 import axios, { AxiosInstance } from "axios";
+import { useSelector } from "react-redux";
+import { RootType } from "../types/storeType";
 
 const token = localStorage.getItem("token");
-const heders = {
-  Authorization: `Bearer ${token}`,
-  "Content-Type": "multipart/form-data",
-};
-const axiosIntelisen = axios.create({
+// const token = useSelector((state: RootType) => state.setToken);
+console.log(token);
+
+const axiosIntelisen: AxiosInstance = axios.create({
   baseURL: "http://localhost:5000/api/v1",
 });
-
-const axios_Heders: AxiosInstance = axios.create({
+const ApiToken: AxiosInstance = axios.create({
   baseURL: "http://localhost:5000/api/v1",
-  headers: heders,
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
 });
 
-export { axiosIntelisen, axios_Heders };
+export { axiosIntelisen, ApiToken };

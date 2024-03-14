@@ -23,32 +23,33 @@ import { useQuery } from "@tanstack/react-query";
 import { axiosIntelisen } from "../lib/axios";
 import { ChatUserProps, DetailProps } from "../types/TypeData";
 import { SlOptions } from "react-icons/sl";
+import { useReply } from "../features/Reply/useReply";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootType } from "../types/storeType";
+import { useChatUser } from "../features/Thread/useThread";
 
-export const DetailStatus = () => {
+export const DetailReply = () => {
   const { id } = useParams();
+  console.log("id", id);
   const tost = useToast();
 
-  const idlogin = Number(localStorage.getItem("id"));
-  console.log("idlogin", idlogin);
   const token = localStorage.getItem("token");
+  const { getThreadOne } = useReply();
 
-  // console.log(id);
-  const { data } = useQuery({
-    queryFn: async () => {
-      try {
-        const response = await axiosIntelisen.get(`/thread/${id}`);
-        console.log(response);
-        return response.data;
-        // return response;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    queryKey: ["detailStatus"],
-  });
+  const user = useSelector((state: RootType) => state.userStore.id);
+  const threadOne = useSelector((state: RootType) => state.GetIdThread.data);
+  console.log("lol", threadOne);
 
+  const { hendelLike, hendelUnlike } = useChatUser();
+
+  useEffect(() => {
+    if (!token) return;
+
+    getThreadOne(id);
+  }, [user]);
   const hendelDelete = async (id: number, id_user: number) => {
-    if (idlogin !== id_user) {
+    if (user !== id_user) {
       tost({
         position: "top",
         status: "info",
@@ -56,14 +57,11 @@ export const DetailStatus = () => {
       });
     } else {
       try {
-        const response = await axiosIntelisen.delete(
-          `/reply/${id}?=${idlogin}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axiosIntelisen.delete(`/reply/${id}?=${user}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         console.log(response);
         tost({
           position: "top",
@@ -105,9 +103,9 @@ export const DetailStatus = () => {
             <Box w={""} mb={"auto"}>
               <Box>
                 <Avatar
-                  name="Dan Abrahmov"
+                  name={threadOne?.author.name}
                   size="md"
-                  src={"https://bit.ly/dan-abramov"}
+                  src={threadOne?.author.picture}
                 />
               </Box>
             </Box>
@@ -118,13 +116,13 @@ export const DetailStatus = () => {
                   color={"white"}
                   textTransform={"capitalize"}
                 >
-                  {data?.author.name}
+                  {threadOne?.author.name}
                 </Heading>
                 <Text
                   color={"RGBA(255, 255, 255, 0.48)"}
                   fontSize={["0.7rem", "0.8rem", "0.7rem"]}
                 >
-                  {convertDate(data?.created_at)}
+                  {convertDate(threadOne?.created_at)}
                 </Text>
               </HStack>
 
@@ -133,7 +131,7 @@ export const DetailStatus = () => {
                 fontSize={["0.7rem", "0.8rem", "0.7rem"]}
                 mt={1}
               >
-                @{data?.author.username}
+                {threadOne?.author.username}
               </Text>
 
               <Text
@@ -145,7 +143,7 @@ export const DetailStatus = () => {
           </HStack>
           <Box px={4}>
             <Text color={"white"} fontSize={["0.7rem", "0.8rem"]} mt={1}>
-              {data?.content}
+              {threadOne?.content}
             </Text>
             <HStack
               mt={2}
@@ -154,18 +152,38 @@ export const DetailStatus = () => {
               borderRadius={"20px"}
               overflow={"hidden"}
             >
-              {data?.image && <Image src={data.image} />}
+              {threadOne?.image && <Image src={threadOne.image} />}
             </HStack>
             <HStack mt={2} pb={3}>
-              <Box color="red" _hover={{ color: "green", cursor: "pointer" }}>
-                <AiFillHeart size={23} />
-              </Box>
-              <Text
-                color={"rgba(255, 255, 255, 0.48)"}
-                fontSize={["0.7rem", "0.8rem"]}
-              >
-                4
-              </Text>
+              {threadOne.isLike ? (
+                <HStack onClick={() => hendelUnlike(threadOne.id)}>
+                  <Box color="red" _hover={{ color: "red", cursor: "pointer" }}>
+                    <AiFillHeart size={23} />
+                  </Box>
+                  <Text
+                    color={"rgba(255, 255, 255, 0.48)"}
+                    fontSize={["0.7rem", "0.8rem"]}
+                  >
+                    {threadOne.likes.length}
+                  </Text>
+                </HStack>
+              ) : (
+                <HStack onClick={() => hendelLike(threadOne.id)}>
+                  <Box
+                    color="white"
+                    _hover={{ color: "red", cursor: "pointer" }}
+                  >
+                    <AiFillHeart size={23} />
+                  </Box>
+                  <Text
+                    color={"rgba(255, 255, 255, 0.48)"}
+                    fontSize={["0.7rem", "0.8rem"]}
+                  >
+                    {threadOne.likes.length}
+                  </Text>
+                </HStack>
+              )}
+
               <Box color="white" _hover={{ color: "green", cursor: "pointer" }}>
                 <CgComment size={23} />
               </Box>
@@ -173,27 +191,28 @@ export const DetailStatus = () => {
                 color={"rgba(255, 255, 255, 0.48)"}
                 fontSize={["0.7rem", "0.8rem"]}
               >
-                {data?.replies.length}
+                {threadOne.replies?.length}
               </Text>
             </HStack>
           </Box>
         </Box>
         <InputStatus />
         {/* reply */}
-        {data?.replies?.map((item: any) => (
+
+        {threadOne?.replies?.map((item: any) => (
           <Box
             w={"100%"}
             h={"auto"}
-          
             borderBottom={"1px solid #555"}
+            key={item.id}
           >
             <HStack px={4} py={4}>
               <Box w={""} mb={"auto"}>
                 <Box>
                   <Avatar
-                    name="Dan Abrahmov"
+                    name={item?.author.name}
                     size="md"
-                    src={"https://bit.ly/dan-abramov"}
+                    src={item?.author.picture}
                   />
                 </Box>
               </Box>
@@ -258,7 +277,7 @@ export const DetailStatus = () => {
                       color={"rgba(255, 255, 255, 0.48)"}
                       fontSize={["0.7rem", "0.8rem"]}
                     >
-                      400
+                      {item.likes}
                     </Text>
                   </HStack>
                 </Box>
@@ -266,7 +285,6 @@ export const DetailStatus = () => {
             </HStack>
           </Box>
         ))}
-        {/* <HomeCradUsers /> */}
       </Box>
     </Box>
   );
