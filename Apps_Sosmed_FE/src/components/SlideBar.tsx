@@ -13,8 +13,7 @@ export const SlideBar = () => {
       px={"20px"}
     >
       {token && <ProfileSlideBar />}
-
-      <BoxRecomen />
+      {token && <BoxRecomen />}
       <Footer />
     </Box>
   );
