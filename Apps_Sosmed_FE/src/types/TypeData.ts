@@ -21,8 +21,8 @@ export interface AuthorProps {
   username: string;
   bio?: string;
   cover_photo?: string;
-  following?: [];
-  follower?: [];
+  following?: any;
+  follower?: any;
 }
 
 export interface DetailProps {
@@ -66,3 +66,15 @@ export type ThreadOne = {
     picture: any;
   };
 };
+
+export interface IUser {
+  id?: number;
+  name?: string;
+  username?: string;
+  password?: string;
+  picture?: string;
+  bio?: string;
+  cover_photo?: string;
+  follower?: any;
+  following?: any;
+}

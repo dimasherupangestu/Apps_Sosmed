@@ -120,7 +120,7 @@ export const HomeCradUsers: React.FC = () => {
                   <Image
                     boxSize="full"
                     objectFit="cover"
-                    src={data.image[0]}
+                    src={data.image}
                     alt="image"
                   />
                 </Box>

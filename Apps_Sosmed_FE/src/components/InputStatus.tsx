@@ -35,6 +35,7 @@ export const InputStatus = () => {
     try {
       const response = await axiosIntelisen.post("/reply/thread", form, config);
       // console.log(response);
+      console.log("thread", response.data);
       toast({
         title: "Created new reply success!",
         position: "top",

@@ -16,9 +16,10 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/search" element={<Search />} />
+
         <Route path="/follower" element={<FollowerPage />} />
 
-        {/* <Route path="/profile" element={<ProlifePages />} /> */}
+        <Route path="/profile" element={<ProlifePages />} />
         <Route path="/logout" element={<Login />} />
         <Route path="/detailStatus/:id" element={<DetailStatusPages />} />
       </Routes>

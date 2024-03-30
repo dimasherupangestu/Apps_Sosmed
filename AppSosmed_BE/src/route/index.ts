@@ -15,6 +15,7 @@ const upload = multer();
 
 // user api
 routes.get("/search", AuthMiddleware.auth, userController.getUsers);
+routes.get("/user:id", AuthMiddleware.auth, userController.getUser);
 routes.get("/user/me/current", AuthMiddleware.auth, userController.getCurrent);
 routes.post("/register", upload.none(), authController.register);
 routes.post("/login", upload.none(), authController.login);

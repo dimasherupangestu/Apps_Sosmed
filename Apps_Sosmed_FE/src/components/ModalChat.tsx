@@ -74,8 +74,8 @@ export const ModalChat = () => {
         status: "success",
         position: "top",
       });
-      window.location.href = "/";
-      // console.log("file", file);
+      console.log("tes", response.data);
+      console.log("file", file);
     } catch (err) {
       console.log(err);
     }
