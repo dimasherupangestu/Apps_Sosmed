@@ -5,7 +5,7 @@ const data: ThreadOne = {
   id: 0,
   content: "",
   image: "",
-  likes: 0,
+  likes: [],
   isLike: false,
   replies: [],
   created_at: "",

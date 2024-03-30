@@ -31,7 +31,7 @@ export default new (class ReplyService {
         content: response[i].content,
         image: response[i].image,
         likes: response[i].like.length,
-        isLiked: await response[i],
+        isLiked: await likes[i],
         replies: response[i].replies.length,
         author: response[i].author,
         created_at: response[i].created_at,

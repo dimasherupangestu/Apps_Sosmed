@@ -1,32 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface UserAll {
+  id: number;
+  username: string;
+  name: string;
+  picture: string;
+  bio: string;
+  following?: any[];
+  follower?: any[];
+}
+const data: UserAll[] = [];
+const initialState = {
+  data,
+};
 export const useSliceUserAll = createSlice({
-  name: "sliceUser",
-  initialState: {
-    id: 0,
-    name: "",
-    username: "",
-    picture: "",
-    cover_photo: "",
-    bio: "",
-    created_at: "",
-    following: [],
-    follower: [],
-  },
+  name: "sliceUsers",
+  initialState,
   reducers: {
-    updateAll: (state, action) => {
-      state.id = action.payload.id;
-      state.name = action.payload.name;
-      state.username = action.payload.username;
-      state.picture = action.payload.picture;
-      state.cover_photo = action.payload.cover_photo;
-      state.bio = action.payload.bio;
-      state.created_at = action.payload.created_at;
-      state.following = action.payload.following;
-      state.follower = action.payload.follower;
+    Get_Users: (state, action) => {
+      state.data = action.payload.data;
     },
   },
 });
 
-export const { updateAll } = useSliceUserAll.actions;
+export const { Get_Users } = useSliceUserAll.actions;
 export default useSliceUserAll.reducer;

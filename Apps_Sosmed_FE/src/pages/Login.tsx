@@ -5,7 +5,6 @@ import InputElement from "../components/InputElement";
 import { Link, useNavigate } from "react-router-dom";
 import { axiosIntelisen } from "../lib/axios";
 import { useDispatch } from "react-redux";
-import { setToken } from "../store/Slice/sliceToken";
 
 export const Login = () => {
   const naviget = useNavigate();
@@ -25,10 +24,8 @@ export const Login = () => {
       });
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("id", response.data.user.id);
-      // dispatch(setToken(response.data.token));
 
-      naviget("/");
-      console.log(response);
+      console.log("login", response);
     } catch (error) {
       console.log(error);
     }

@@ -14,42 +14,37 @@ import {
 4;
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { Link, useParams } from "react-router-dom";
-import { Data } from "../json/db";
 import { AiFillHeart } from "react-icons/ai";
 import { CgComment } from "react-icons/cg";
 import { InputStatus } from "./InputStatus";
-import { HomeCradUsers } from "./HomeCradUsers";
-import { useQuery } from "@tanstack/react-query";
 import { axiosIntelisen } from "../lib/axios";
-import { ChatUserProps, DetailProps } from "../types/TypeData";
 import { SlOptions } from "react-icons/sl";
 import { useReply } from "../features/Reply/useReply";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootType } from "../types/storeType";
 import { useChatUser } from "../features/Thread/useThread";
+import { Liked } from "../features/like/Liked";
 
 export const DetailReply = () => {
   const { id } = useParams();
-  console.log("id", id);
+  // console.log("id", id);
   const tost = useToast();
 
   const token = localStorage.getItem("token");
   const { getThreadOne } = useReply();
 
-  const user = useSelector((state: RootType) => state.userStore.id);
+  const user = useSelector((state: RootType) => state.userStore);
   const threadOne = useSelector((state: RootType) => state.GetIdThread.data);
-  console.log("lol", threadOne);
+  console.log("ThreadOne", threadOne);
 
-  const { hendelLike, hendelUnlike } = useChatUser();
+  // const { hendelLike, hendelUnlike, useGetThread } = useChatUser();
 
   useEffect(() => {
-    if (!token) return;
-
     getThreadOne(id);
-  }, [user]);
+  }, [user, Liked]);
   const hendelDelete = async (id: number, id_user: number) => {
-    if (user !== id_user) {
+    if (user.id !== id_user) {
       tost({
         position: "top",
         status: "info",
@@ -122,7 +117,7 @@ export const DetailReply = () => {
                   color={"RGBA(255, 255, 255, 0.48)"}
                   fontSize={["0.7rem", "0.8rem", "0.7rem"]}
                 >
-                  {convertDate(threadOne?.created_at)}
+                  {/* {convertDate(threadOne?.created_at)} */}
                 </Text>
               </HStack>
 
@@ -131,14 +126,8 @@ export const DetailReply = () => {
                 fontSize={["0.7rem", "0.8rem", "0.7rem"]}
                 mt={1}
               >
-                {threadOne?.author.username}
+                @{threadOne?.author.username}
               </Text>
-
-              <Text
-                color={"RGBA(255, 255, 255, 0.48)"}
-                fontSize={["0.7rem", "0.8rem", "0.7rem"]}
-                mt={1}
-              ></Text>
             </Box>
           </HStack>
           <Box px={4}>
@@ -155,34 +144,13 @@ export const DetailReply = () => {
               {threadOne?.image && <Image src={threadOne.image} />}
             </HStack>
             <HStack mt={2} pb={3}>
-              {threadOne.isLike ? (
-                <HStack onClick={() => hendelUnlike(threadOne.id)}>
-                  <Box color="red" _hover={{ color: "red", cursor: "pointer" }}>
-                    <AiFillHeart size={23} />
-                  </Box>
-                  <Text
-                    color={"rgba(255, 255, 255, 0.48)"}
-                    fontSize={["0.7rem", "0.8rem"]}
-                  >
-                    {threadOne.likes.length}
-                  </Text>
-                </HStack>
-              ) : (
-                <HStack onClick={() => hendelLike(threadOne.id)}>
-                  <Box
-                    color="white"
-                    _hover={{ color: "red", cursor: "pointer" }}
-                  >
-                    <AiFillHeart size={23} />
-                  </Box>
-                  <Text
-                    color={"rgba(255, 255, 255, 0.48)"}
-                    fontSize={["0.7rem", "0.8rem"]}
-                  >
-                    {threadOne.likes.length}
-                  </Text>
-                </HStack>
-              )}
+              {""}
+              <Liked
+                isLike={threadOne.isLike}
+                likes={threadOne.likes.length}
+                id={threadOne.id}
+                typeLike="thread"
+              />
 
               <Box color="white" _hover={{ color: "green", cursor: "pointer" }}>
                 <CgComment size={23} />
@@ -267,18 +235,12 @@ export const DetailReply = () => {
                     {item?.image && <Image src={item.image} />}
                   </HStack>
                   <HStack mt={2} pb={3}>
-                    <Box
-                      color="red"
-                      _hover={{ color: "green", cursor: "pointer" }}
-                    >
-                      <AiFillHeart size={23} />
-                    </Box>
-                    <Text
-                      color={"rgba(255, 255, 255, 0.48)"}
-                      fontSize={["0.7rem", "0.8rem"]}
-                    >
-                      {item.likes}
-                    </Text>
+                    <Liked
+                      isLike={item.isLiked}
+                      likes={item.likes}
+                      typeLike="reply"
+                      idReply={item.id}
+                    />
                   </HStack>
                 </Box>
               </Box>

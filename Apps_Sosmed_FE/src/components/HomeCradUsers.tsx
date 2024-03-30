@@ -49,7 +49,6 @@ export const HomeCradUsers: React.FC = () => {
   const { useGetThread, hendelLike, hendelDelete, hendelUnlike } =
     useChatUser();
   useEffect(() => {
-    if (!token) return;
     useGetThread(user.id);
   }, [user.id]);
   return (

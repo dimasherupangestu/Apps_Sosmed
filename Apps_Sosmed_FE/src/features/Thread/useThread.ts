@@ -12,24 +12,12 @@ export const useChatUser = () => {
   const token = localStorage.getItem("token");
   const tost = useToast();
   const user = useSelector((state: RootType) => state.userStore.id);
-
-  // const { data,  } = useQuery({
-  //   queryFn: async () => {
-  //     const response = await axiosIntelisen.get("/thread");
-  //     console.log(response);
-  //     setDataThread(response.data);
-
-  //     return response.data;
-  //   },
-  //   queryKey: ["chatUser"],
-  // });
-
   const useGetThread = async (id: number) => {
     try {
       const response = await axiosIntelisen.get(`/thread?id=${id}`);
       dispatch(GET_THREAD({ data: response.data }));
       // dispatch(Fetch_Thread(useGetThread(id)));
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -45,6 +33,7 @@ export const useChatUser = () => {
           },
         }
       );
+      console.log("like", response);
       useGetThread(user);
     } catch (err) {
       console.log(err);
@@ -66,6 +55,7 @@ export const useChatUser = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log("unlike", response);
       useGetThread(user);
     } catch (err) {
       console.log(err);
@@ -106,6 +96,18 @@ export const useChatUser = () => {
       });
       // naviget("/login");
     }
+
+    const hendelLikeDetail = async () => {
+      if (!token) {
+        tost({
+          title: "Please Login first",
+          status: "info",
+          position: "top",
+        });
+        return;
+      } else {
+      }
+    };
   };
   return {
     useGetThread,

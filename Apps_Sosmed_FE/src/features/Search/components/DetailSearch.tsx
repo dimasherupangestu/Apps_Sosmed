@@ -1,8 +1,17 @@
 import { Box, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import React from "react";
 import { MdPersonSearch } from "react-icons/md";
+import { axiosIntelisen } from "../../../lib/axios";
 
 export const DetailSearch = () => {
+  const [search, setSearch] = useState("");
+  const hendelLike = async () => {
+    try {
+      const response = await axiosIntelisen.get("/search");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Box w={"100%"} h={"100vh"} bg={"#171923"} pt={6}>
       <Box w={"80%"} mx={"auto"}>

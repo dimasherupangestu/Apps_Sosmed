@@ -50,7 +50,7 @@ export const BoxRecomen = () => {
         <Text color={"white"} fontWeight={600}>
           Suggested for you
         </Text>
-        <Box height={"15rem"} overflowY={"scroll"}>
+        <Box minHeight={"100%"} maxHeight={"14rem"} overflowY={"auto"}>
           {data?.map((data: AuthorProps, index: number) => (
             <Box key={index}>
               <CardUser

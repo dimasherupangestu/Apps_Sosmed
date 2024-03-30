@@ -4,7 +4,7 @@ import { RootType } from "../types/storeType";
 
 const token = localStorage.getItem("token");
 // const token = useSelector((state: RootType) => state.setToken);
-console.log(token);
+// console.log(token);
 
 const axiosIntelisen: AxiosInstance = axios.create({
   baseURL: "http://localhost:5000/api/v1",
