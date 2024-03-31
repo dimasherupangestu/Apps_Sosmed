@@ -5,6 +5,7 @@ import ResponsError from "../error/responsError";
 import * as bcrypt from "bcrypt";
 import { Follow } from "../entity/Follow";
 import { equal } from "joi";
+import cloudinary from "../libs/cloudinary";
 export default new (class UserService {
   private readonly userRepository: Repository<User> =
     AppDataSource.getRepository(User);
@@ -103,19 +104,25 @@ export default new (class UserService {
   async uploadPicture(id, session, picture) {
     if (session !== id)
       throw new ResponsError(403, "Cannot update another user's profile");
-    await this.userRepository.update({ id }, { picture });
+
+    cloudinary.upload();
+    const upFIle = await cloudinary.destination(picture);
+    await this.userRepository.update({ id }, { picture: upFIle.secure_url });
     return {
       message: "Picture uploaded",
     };
   }
-  // async uploadCover(id, session, cover:string) {
-  //   if (session !== id)
-  //     throw new ResponsError(403, "Cannot update another user's profile");
-  //   await this.userRepository.update( id ,session , cover);
-  //   return {
-  //     message: "Cover uploaded",
-  //   };
-  // }
+  async uploadCover(id, session, cover: string) {
+    if (session !== id)
+      throw new ResponsError(403, "Cannot update another user's profile");
+
+    cloudinary.upload();
+    const upFIle = await cloudinary.destination(cover);
+    await this.userRepository.update(id, { cover_photo: upFIle.secure_url });
+    return {
+      message: "Cover uploaded",
+    };
+  }
 
   async deleteUser(id, session) {
     if (session !== id)

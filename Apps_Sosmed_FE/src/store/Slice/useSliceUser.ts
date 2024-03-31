@@ -14,7 +14,7 @@ export const useSliceUser = createSlice({
     follower: [],
   },
   reducers: {
-    update: (state, action) => {
+    USER_ID: (state, action) => {
       // console.log("user", action.payload);
       state.id = action.payload.id;
       state.name = action.payload.name;
@@ -29,5 +29,5 @@ export const useSliceUser = createSlice({
   },
 });
 
-export const { update } = useSliceUser.actions;
+export const { USER_ID } = useSliceUser.actions;
 export default useSliceUser.reducer;

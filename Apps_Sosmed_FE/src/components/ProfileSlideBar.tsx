@@ -14,11 +14,11 @@ import {
 // import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { update } from "../store/Slice/useSliceUser";
 import { axiosIntelisen } from "../lib/axios";
 import { RootType } from "../types/storeType";
 import { useEffect } from "react";
 import { useFollow } from "../features/Follow/componen/hook/useFollow";
+import { USER_ID } from "../store/Slice/useSliceUser";
 
 export const ProfileSlideBar = () => {
   let boxBg = useColorModeValue("#1A202C", "white !important");
@@ -36,7 +36,7 @@ export const ProfileSlideBar = () => {
         },
       });
       console.log(response);
-      dispatch(update(response.data));
+      dispatch(USER_ID(response.data));
     } catch (error) {
       console.log("error", error);
     }
@@ -60,7 +60,6 @@ export const ProfileSlideBar = () => {
       pb={"20px"}
       w={{ base: "0px", md: "100%", lg: "100%" }}
       mx={"auto"}
-      mt={"20px"}
       direction="column"
       color={"white"}
     >

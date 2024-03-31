@@ -32,7 +32,7 @@ export const Layout = ({ children }: layoutProps) => {
             top={0}
             left={0}
             bottom={0}
-            // bg={"blue"}
+            bg={"blue"}
           >
             <Navbar></Navbar>
           </Box>
@@ -40,23 +40,25 @@ export const Layout = ({ children }: layoutProps) => {
         <Flex
           w={"100%"}
           h={"100%"}
-          // bg={"#171923"}
+          // bg={"yellow"}
           pos={"relative"}
+          maxHeight={"revert-layer"}
           borderLeft={"1px solid #555"}
         >
           <Box
-            w={{ base: "100%", md: "100%", lg: "60%", xl: "65%" }}
+            w={{ base: "100%", md: "100%", lg: "64%", xl: "65%" }}
             h={"100%"}
-            minHeight={"100vh"}
+            maxHeight={"revert-layer"}
 
             // borderLeft={{ base: "none", md: "1px solid #555" }}
           >
             {children}
           </Box>
           <Box
-            w={{ base: "0px", md: "0px", lg: "40%", xl: "35%" }}
-            h={"100%"}
-            minHeight={"100vh"}
+            w={{ base: "0px", md: "0px", lg: "37%", xl: "35%" }}
+            // bg={"yellow"}
+            pos={"relative"}
+            maxHeight={"revert-layer"}
             overflow={"hidden"}
             borderLeft={"1px solid #555"}
           >

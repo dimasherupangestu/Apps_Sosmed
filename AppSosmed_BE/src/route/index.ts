@@ -15,7 +15,22 @@ const upload = multer();
 
 // user api
 routes.get("/search", AuthMiddleware.auth, userController.getUsers);
-routes.get("/user:id", AuthMiddleware.auth, userController.getUser);
+routes.get("/user/:id", AuthMiddleware.auth, userController.getUser);
+routes.patch("/user/:id", AuthMiddleware.auth, userController.updateUser);
+routes.patch(
+  "/userPicture/:id",
+  AuthMiddleware.auth,
+  uploadFile.upload("picture"),
+  userController.updatePicture
+);
+
+routes.patch(
+  "/userCoverPhoto/:id",
+  AuthMiddleware.auth,
+  uploadFile.upload("cover_photo"),
+  userController.updateCover_photo
+);
+
 routes.get("/user/me/current", AuthMiddleware.auth, userController.getCurrent);
 routes.post("/register", upload.none(), authController.register);
 routes.post("/login", upload.none(), authController.login);

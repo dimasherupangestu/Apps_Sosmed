@@ -37,9 +37,10 @@ export const HomeChat = () => {
   return (
     <Box
       w={"100%"}
-      h={"full"}
+      h={"100%"}
       bg={"#171923"}
       py={4}
+
       // borderLeft={"1px solid #555"}
     >
       <Box>

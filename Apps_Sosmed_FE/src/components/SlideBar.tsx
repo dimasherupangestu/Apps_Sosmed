@@ -8,9 +8,12 @@ export const SlideBar = () => {
   return (
     <Box
       bg={"#171923"}
+      // bg={"blue"}
       w={{ base: "0px", md: "0px", lg: "100%", xl: "100%" }}
-      py={"40px"}
+      py={"20px"}
       px={"20px"}
+      height={"100%"}
+      minHeight={"revert-layer"}
     >
       {token && <ProfileSlideBar />}
       {token && <BoxRecomen />}

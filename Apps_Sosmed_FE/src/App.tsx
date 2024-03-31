@@ -7,6 +7,7 @@ import { DetailStatusPages } from "./pages/DetailStatusPages";
 import { Search } from "./pages/Search";
 import { FollowerPage } from "./pages/FollowerPage";
 import { ProlifePages } from "./pages/ProlifePages";
+import { EditProfilePage } from "./pages/EditProfilePages";
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
         <Route path="/follower" element={<FollowerPage />} />
 
         <Route path="/profile" element={<ProlifePages />} />
+        <Route path="/editprofile/:id" element={<EditProfilePage />} />
+
         <Route path="/logout" element={<Login />} />
         <Route path="/detailStatus/:id" element={<DetailStatusPages />} />
       </Routes>
