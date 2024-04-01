@@ -19,6 +19,7 @@ import { RootType } from "../types/storeType";
 import { useEffect } from "react";
 import { useFollow } from "../features/Follow/componen/hook/useFollow";
 import { USER_ID } from "../store/Slice/useSliceUser";
+import useUser from "../features/User/useUser";
 
 export const ProfileSlideBar = () => {
   let boxBg = useColorModeValue("#1A202C", "white !important");
@@ -28,19 +29,7 @@ export const ProfileSlideBar = () => {
   const dispatch = useDispatch();
   const { getFollowers } = useFollow();
   const user = useSelector((state: RootType) => state.userStore);
-  const getUser = async () => {
-    try {
-      const response = await axiosIntelisen.get("/user/me/current", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(response);
-      dispatch(USER_ID(response.data));
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
+  const { getUser } = useUser();
 
   // useEffect(() => {
   //   if (!token) return;

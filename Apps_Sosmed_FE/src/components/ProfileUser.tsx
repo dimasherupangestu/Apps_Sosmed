@@ -42,7 +42,7 @@ export const ProfileUser = () => {
   const GetThread = useSelector((state: RootType) => state.GetThread.data);
   // console.log("GetThread", GetThread);
   const filter = GetThread.filter((data: any) => data.author.id === user.id);
-  console.log("filter", filter);
+  // console.log("filter", filter);
 
   useEffect(() => {
     if (!token) return;

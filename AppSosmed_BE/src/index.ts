@@ -12,7 +12,7 @@ AppDataSource.initialize()
       cors({
         credentials: true,
         origin: "http://localhost:5173",
-        methods: ["GET", "POST", "PACTH", "DELETE"],
+        methods: ["GET", "POST", "PATCH", "DELETE"],
         allowedHeaders: ["Content-Type", "Authorization", "Origin", "Accept"],
         preflightContinue: true,
       })

@@ -13,6 +13,7 @@ import { useFormik } from "formik";
 import { useMutation } from "@tanstack/react-query";
 import { axiosIntelisen } from "../lib/axios";
 import { ChatUserProps, IFrom } from "../types/TypeData";
+import { useNavigate } from "react-router-dom";
 
 export const ModalChat = () => {
   // const formik = useFormik({
@@ -47,6 +48,7 @@ export const ModalChat = () => {
   //   formik.setFieldValue("image", event.target.value[0]);
   // };
   const tost = useToast();
+  const naviget = useNavigate();
   const getIdUser = localStorage.getItem("id");
   const token = localStorage.getItem("token");
 
@@ -74,8 +76,10 @@ export const ModalChat = () => {
         status: "success",
         position: "top",
       });
-      console.log("tes", response.data);
-      console.log("file", file);
+      // console.log("tes", response.data);
+      // console.log("file", file);
+      naviget("/");
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }

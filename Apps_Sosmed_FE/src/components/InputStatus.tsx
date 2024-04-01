@@ -32,6 +32,14 @@ export const InputStatus = () => {
 
   const hendelSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!token) {
+      toast({
+        title: "Please Login first",
+        status: "info",
+        position: "top",
+      });
+      return;
+    }
     try {
       const response = await axiosIntelisen.post("/reply/thread", form, config);
       // console.log(response);

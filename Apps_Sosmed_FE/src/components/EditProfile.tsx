@@ -15,19 +15,32 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { RiImageAddFill } from "react-icons/ri";
 import { useProfile } from "../features/Profile/useProfile";
+import { axiosIntelisen } from "../lib/axios";
 
 export const EditProfile = () => {
   const { id } = useParams();
-
-  //   console.log("user", user);
   let boxBg = useColorModeValue("#1A202C", "white !important");
-  const { GetUserId, user, form, setForm, hendelSubmit } = useProfile();
+
+  const {
+    GetUserId,
+    user,
+    form,
+    setForm,
+    hendelSubmit,
+    hendelChange,
+    profile,
+    cover,
+  } = useProfile();
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault(); // Prevent default form behavior
+    hendelSubmit(Number(id));
+  };
   useEffect(() => {
     GetUserId(Number(id));
   }, [id]);
   return (
     <>
-      <form onSubmit={hendelSubmit} method="post" enctype="multipart/form-data">
+      <form onSubmit={handleSubmit} method="post">
         <Box w={"100%"} height={"100%"} bg={"#171923"}>
           <Flex
             borderRadius="20px"
@@ -41,23 +54,35 @@ export const EditProfile = () => {
             boxSizing="border-box"
           >
             <Box w={"100%"} position={"relative"} className="input header">
-              <Image
-                src={
-                  user?.cover_photo !== undefined
-                    ? user?.cover_photo
-                    : "https://i.ibb.co/xmP2pS6/Profile.png"
-                }
-                width={"100%"}
-                filter={"grayscale(80%)"}
-                height={"10rem"}
-                borderRadius={"10px"}
-              />
+              {cover ? (
+                <Image
+                  src={cover}
+                  width={"100%"}
+                  filter={"grayscale(80%)"}
+                  height={"10rem"}
+                  borderRadius={"10px"}
+                />
+              ) : (
+                <>
+                  <Image
+                    src={
+                      user?.cover_photo !== null
+                        ? user?.cover_photo
+                        : "https://i.ibb.co/xmP2pS6/Profile.png"
+                    }
+                    width={"100%"}
+                    filter={"grayscale(80%)"}
+                    height={"10rem"}
+                    borderRadius={"10px"}
+                  />
+                </>
+              )}
               <Box
                 w={65}
                 h={65}
                 position={"absolute"}
                 as="label"
-                htmlFor="header"
+                htmlFor="cover_photo"
                 zIndex={4}
                 top={9}
                 border={"4px solid #171923"}
@@ -70,11 +95,11 @@ export const EditProfile = () => {
               >
                 <Input
                   type="file"
-                  id="header"
+                  id="cover_photo"
                   accept="image/png, image/jpeg"
-                  name="header"
+                  name="cover_photo"
                   formEncType="multipart/form-data"
-                  //   onChange={}
+                  onChange={hendelChange}
                   display={"none"}
                 />
                 <Center>
@@ -103,24 +128,39 @@ export const EditProfile = () => {
             </Box>
             <Flex flexDirection="column" mb="10px" px={4} mt="-30px">
               <Box className="input img" position={"relative"}>
-                <Avatar
-                  src={user?.picture}
-                  name={user?.name}
-                  filter={"grayscale(80%)"}
-                  border="5px solid #1A202C"
-                  ml={"20px"}
-                  borderColor={boxBg}
-                  width="68px"
-                  height="68px"
-                  mt="-38px"
-                  borderRadius="50%"
-                />
+                {profile ? (
+                  <Avatar
+                    src={profile}
+                    name={user?.name}
+                    filter={"grayscale(80%)"}
+                    border="5px solid #1A202C"
+                    ml={"20px"}
+                    borderColor={boxBg}
+                    width="68px"
+                    height="68px"
+                    mt="-38px"
+                    borderRadius="50%"
+                  />
+                ) : (
+                  <Avatar
+                    src={user?.picture}
+                    name={user?.name}
+                    filter={"grayscale(80%)"}
+                    border="5px solid #1A202C"
+                    ml={"20px"}
+                    borderColor={boxBg}
+                    width="68px"
+                    height="68px"
+                    mt="-38px"
+                    borderRadius="50%"
+                  />
+                )}
                 <Box
                   w={"2rem"}
                   h={"2rem"}
                   position={"absolute"}
                   as="label"
-                  htmlFor="profile_picture"
+                  htmlFor="picture"
                   zIndex={4}
                   top={1}
                   border={"3px solid #171923"}
@@ -136,15 +176,11 @@ export const EditProfile = () => {
                   </Center>
                   <Input
                     type="file"
-                    id="profile_picture"
+                    id="picture"
                     accept="image/png, image/jpeg"
-                    name="profile_picture"
+                    name="picture"
                     formEncType="multipart/form-data"
-                    //   onChange={(event) => {
-                    //     const img = event.target.files![0];
-                    //     setProfilePreview(URL.createObjectURL(img));
-                    //     return setEditProfilePicture(img);
-                    //   }}
+                    onChange={hendelChange}
                     display={"none"}
                   />
                 </Box>

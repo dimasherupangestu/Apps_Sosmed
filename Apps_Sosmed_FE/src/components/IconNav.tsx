@@ -3,8 +3,11 @@ import { AiFillHeart } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { FaHome } from "react-icons/fa";
 import { MdPersonSearch } from "react-icons/md";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { RootType } from "../types/storeType";
 export const IconNav = () => {
+  const userId = useSelector((state: RootType) => state.userStore);
   return (
     <Box px={2}>
       <Link to="/">

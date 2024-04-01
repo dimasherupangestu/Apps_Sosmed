@@ -23,6 +23,7 @@ import { useChatUser } from "../features/Thread/useThread";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootType } from "../types/storeType";
+import { formatDistanceToNow, parseISO } from "date-fns";
 
 export const HomeCradUsers: React.FC = () => {
   // const id = useParams.id!;
@@ -88,7 +89,8 @@ export const HomeCradUsers: React.FC = () => {
                   color={"RGBA(255, 255, 255, 0.48)"}
                   fontSize={{ base: "0.5rem", md: "0.7rem" }}
                 >
-                  {convertDate(data?.created_at)}
+                  {data.created_at &&
+                    formatDistanceToNow(parseISO(data.created_at))}
                 </Text>
                 <Box h={"15px"} ml={"auto"} px={2} textAlign={"center"}>
                   <Menu isLazy>

@@ -113,6 +113,7 @@ export default new (class UserService {
     };
   }
   async uploadCover(id, session, cover: string) {
+    
     if (session !== id)
       throw new ResponsError(403, "Cannot update another user's profile");
 

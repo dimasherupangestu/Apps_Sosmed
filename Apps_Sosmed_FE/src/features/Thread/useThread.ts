@@ -23,6 +23,14 @@ export const useChatUser = () => {
     }
   };
   const hendelLike = async (id: number) => {
+    if (!token) {
+      tost({
+        title: "Please Login first",
+        status: "info",
+        position: "top",
+      });
+      return;
+    }
     try {
       const response = await axiosIntelisen.post(
         `/like/thread/`,
@@ -49,6 +57,14 @@ export const useChatUser = () => {
   };
 
   const hendelUnlike = async (id: number) => {
+    if (!token) {
+      tost({
+        title: "Please Login first",
+        status: "info",
+        position: "top",
+      });
+      return;
+    }
     try {
       const response = await axiosIntelisen.delete(`/unlike/thread?id=${id}`, {
         headers: {
@@ -63,6 +79,14 @@ export const useChatUser = () => {
   };
 
   const hendelDelete = async (id: number, id_user: number) => {
+    if (!token) {
+      tost({
+        title: "Please Login first",
+        status: "info",
+        position: "top",
+      });
+      return;
+    }
     // console.log(id);
     if (user !== id_user) {
       tost({

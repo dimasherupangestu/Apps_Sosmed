@@ -26,8 +26,16 @@ export const useSliceUser = createSlice({
       state.following = action.payload.following;
       state.follower = action.payload.follower;
     },
+
+    UPDATE_Picture: (state, action) => {
+      state.picture = action.payload;
+    },
+
+    UPDATE_COVER: (state, action) => {
+      state.cover_photo = action.payload;
+    },
   },
 });
 
-export const { USER_ID } = useSliceUser.actions;
+export const { USER_ID, UPDATE_Picture, UPDATE_COVER } = useSliceUser.actions;
 export default useSliceUser.reducer;

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootType } from "../types/storeType";
 import { axiosIntelisen } from "../lib/axios";
 import { useQuery } from "@tanstack/react-query";
-import { updateAll } from "../store/Slice/useSliceUserAll";
+
 import { AuthorProps } from "../types/TypeData";
 import { CardUser } from "./CardUser";
 

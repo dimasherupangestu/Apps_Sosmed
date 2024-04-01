@@ -3,8 +3,9 @@ import { axiosIntelisen } from "../../lib/axios";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import { RootType } from "../../types/storeType";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { UPDATE_COVER, UPDATE_Picture } from "../../store/Slice/useSliceUser";
 
 export interface EditUserProps {
   name?: string;
@@ -16,12 +17,17 @@ export interface EditUserProps {
 export const useProfile = () => {
   const token = localStorage.getItem("token");
   const userLogin = useSelector((state: RootType) => state.userStore);
-  //   console.log(userLogin);
-  const [user, setUser] = useState<EditUserProps>();
+  const dispatch = useDispatch();
   const naviget = useNavigate();
   const toast = useToast();
-  const [headerPreview, setHeaderPreview] = useState<any>(null);
-  const [profilePreview, setProfilePreview] = useState<any>(null);
+
+  const [user, setUser] = useState<EditUserProps>();
+  const [profile, setProfile] = useState<any>(null);
+  const [cover, setCover] = useState<any>(null);
+  console.log("cover", cover);
+  console.log("profile", profile);
+  const [profilePicture, setProfilePicture] = useState<File | null>(null);
+  const [coverPhoto, setCoverPhoto] = useState<File | null>(null);
   const val = !userLogin.bio ? "" : userLogin.bio;
 
   const [form, setForm] = useState<EditUserProps>({
@@ -29,29 +35,83 @@ export const useProfile = () => {
     username: userLogin.username,
     bio: val,
   });
-  console.log("form", form);
 
-  const hendelSubmit = async () => {
+  const hendelSubmit = async (id: number) => {
     try {
-      const response = await axios.patch(
-        `http://localhost:5000/api/v1/user/${userLogin.id}`,
-        form,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(response.data);
+      if (profilePicture) {
+        const formData = new FormData();
+        formData.append("picture", profilePicture);
+
+        const response = await axiosIntelisen.patch(
+          `/userPicture/${id}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        dispatch(UPDATE_Picture(response.data));
+
+        toast({
+          title: "Success",
+          description: "Update picture success",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+
+      if (coverPhoto) {
+        const formData = new FormData();
+        formData.append("cover_photo", coverPhoto);
+
+        const response = await axiosIntelisen.patch(
+          `/userCoverPhoto/${id}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        dispatch(UPDATE_COVER(response.data));
+      }
+
+      const response = await axiosIntelisen.patch(`/user/${id}`, form, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       toast({
         title: "Success",
-        description: "Update profile success",
+        description: "Update success",
         status: "success",
         duration: 3000,
         isClosable: true,
       });
+      naviget("/profile");
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const hendelChange = (event: any) => {
+    const file = event.target.files[0];
+    console.log("file", file);
+    if (!file) return;
+
+    if (event.target.name === "picture") {
+      setProfilePicture(file);
+      setProfile(URL.createObjectURL(file));
+    } else if (event.target.name === "cover_photo") {
+      setCoverPhoto(file);
+      setCover(URL.createObjectURL(file));
     }
   };
 
@@ -63,16 +123,22 @@ export const useProfile = () => {
         },
       });
       setUser(response.data);
-      //   console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   };
+
   return {
     GetUserId,
     user,
     hendelSubmit,
     form,
     setForm,
+    profilePicture,
+    profile,
+    cover,
+    setProfilePicture,
+    hendelChange,
+    coverPhoto,
   };
 };
