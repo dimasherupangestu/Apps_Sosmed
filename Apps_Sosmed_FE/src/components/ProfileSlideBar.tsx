@@ -27,14 +27,9 @@ export const ProfileSlideBar = () => {
   let secondaryText = useColorModeValue("gray.400", "gray.400");
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
-  const { getFollowers } = useFollow();
+  // const { getFollowers } = useFollow();
   const user = useSelector((state: RootType) => state.userStore);
   const { getUser } = useUser();
-
-  // useEffect(() => {
-  //   if (!token) return;
-  //   getUser();
-  // }, [token]);
   useEffect(() => {
     if (!token) return;
     getUser();
@@ -108,7 +103,7 @@ export const ProfileSlideBar = () => {
       </Flex>
       <Box>
         <Text color={"white"} fontSize={"0.9rem"}>
-          Picked over by the worms, and weird fishes
+          {user.bio}
         </Text>
         <HStack spacing={1} fontSize={"0.8rem"} mt={1}>
           <Text color={secondaryText}>{user.following.length}</Text>
