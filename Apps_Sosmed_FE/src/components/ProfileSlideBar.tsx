@@ -17,9 +17,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { axiosIntelisen } from "../lib/axios";
 import { RootType } from "../types/storeType";
 import { useEffect } from "react";
-import { useFollow } from "../features/Follow/componen/hook/useFollow";
-import { USER_ID } from "../store/Slice/useSliceUser";
-import useUser from "../features/User/useUser";
+
+import useUser from "../features/User/hook/useUser";
 
 export const ProfileSlideBar = () => {
   let boxBg = useColorModeValue("#1A202C", "white !important");

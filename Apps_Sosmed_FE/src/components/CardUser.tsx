@@ -7,7 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { axiosIntelisen } from "../lib/axios";
 import { useFollow } from "../features/Follow/componen/hook/useFollow";
 export const CardUser = (data: any) => {
-  // console.log("dataid", data.id);
+  console.log("dataid", data);
   const user = useSelector((state: RootType) => state.userStore);
   const token = localStorage.getItem("token");
 

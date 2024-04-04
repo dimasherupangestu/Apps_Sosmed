@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import { axiosIntelisen } from "../../lib/axios";
-import { USER_ID } from "../../store/Slice/useSliceUser";
+import { axiosIntelisen } from "../../../lib/axios";
+import { USER_ID } from "../../../store/Slice/useSliceUser";
 
 const useUser = () => {
   const dispatch = useDispatch();

@@ -1,6 +1,9 @@
 import {
   Box,
   Button,
+  FormControl,
+  FormErrorMessage,
+  FormHelperText,
   HStack,
   Heading,
   Stack,
@@ -13,6 +16,8 @@ import InputElement from "../components/InputElement";
 import { Link, useNavigate } from "react-router-dom";
 import { axiosIntelisen } from "../lib/axios";
 import { useDispatch } from "react-redux";
+import { isValidasi } from "../features/User/hook/isValidasi";
+import { Controller } from "react-hook-form";
 
 export const Login = () => {
   const naviget = useNavigate();
@@ -21,18 +26,38 @@ export const Login = () => {
   }
   const tost = useToast();
   const dispatch = useDispatch();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  // const [username, setUsername] = useState("");
+  // const [password, setPassword] = useState("");
 
-  const hendelLogin = async (e: any) => {
-    e.preventDefault();
+  // const hendelLogin = async (e: any) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axiosIntelisen.post("/login", {
+  //       username: username,
+  //       password: password,
+  //     });
+  //     localStorage.setItem("token", response.data.token);
+  //     localStorage.setItem("id", response.data.user.id);
+  //     tost({
+  //       title: "Login Success",
+  //       status: "success",
+  //       isClosable: true,
+  //       position: "top",
+  //     });
+  //     naviget("/");
+
+  //     console.log("login", response);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const { control, handleSubmit } = isValidasi();
+  const onSubmit = async (data: { username: string; password: string }) => {
     try {
-      const response = await axiosIntelisen.post("/login", {
-        username: username,
-        password: password,
-      });
+      const response = await axiosIntelisen.post("/login", data);
+      console.log("res", response);
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("id", response.data.user.id);
       tost({
         title: "Login Success",
         status: "success",
@@ -40,10 +65,16 @@ export const Login = () => {
         position: "top",
       });
       naviget("/");
-
-      console.log("login", response);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      return tost({
+        title: "login failed",
+        status: "error",
+        description: error.response.data.message || error.message,
+        position: "top",
+        isClosable: true,
+        duration: 3000,
+      });
     }
   };
   return (
@@ -65,19 +96,60 @@ export const Login = () => {
             Login To Circle
           </Text>
           <Stack mt={4} spacing={4}>
-            <InputElement
-              name={username}
-              type="text"
-              placeholder="username"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <InputElement
-              name="password"
-              type="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button onClick={hendelLogin}>Login</Button>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              style={{ width: "100%", height: "100%" }}
+            >
+              <Controller
+                name="username"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <FormControl isInvalid={!!fieldState.error?.message}>
+                    <InputElement
+                      name={"username"}
+                      type="text"
+                      placeholder="username"
+                      value={field.value}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                    />
+                    {!!fieldState.error?.message ? (
+                      <FormErrorMessage>
+                        {fieldState.error?.message}
+                      </FormErrorMessage>
+                    ) : (
+                      <FormHelperText>
+                        We'll never share your Username.
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                )}
+              />
+              <Controller
+                name="password"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <FormControl mt={2} isInvalid={!!fieldState.error?.message}>
+                    <InputElement
+                      name="password"
+                      type="password"
+                      placeholder="Password"
+                      value={field.value}
+                      onBlur={field.onBlur}
+                      onChange={field.onChange}
+                    />
+                    {!!fieldState.error?.message && (
+                      <FormErrorMessage>
+                        {fieldState.error?.message}
+                      </FormErrorMessage>
+                    )}
+                  </FormControl>
+                )}
+              />
+              <Button type="submit" mt={3}>
+                Login
+              </Button>
+            </form>
             <HStack pb={3}>
               <Text color={"white"}>Don't have an account yet?</Text>
               <Text color={"green.500"}>
