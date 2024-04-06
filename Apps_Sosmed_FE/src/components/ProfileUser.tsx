@@ -24,7 +24,7 @@ import { SlOptions } from "react-icons/sl";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useFollow } from "../features/Follow/componen/hook/useFollow";
-import { useChatUser } from "../features/Thread/useThread";
+import { useChatUser } from "../features/Thread/hook/useThread";
 import { RootType } from "../types/storeType";
 
 export const ProfileUser = () => {

@@ -1,9 +1,10 @@
 import { Box, HStack, Text, useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
-import { useChatUser } from "../Thread/useThread";
+import { useChatUser } from "../Thread/hook/useThread";
 import { axiosIntelisen } from "../../lib/axios";
-import { useReply } from "../Reply/useReply";
+import { useReply } from "../Reply/hook/useReply";
+import { useDispatch } from "react-redux";
 
 interface like {
   isLike: boolean;
@@ -16,18 +17,16 @@ interface like {
 export const Liked = ({ isLike, likes, id, typeLike, idReply }: like) => {
   const [islike, setIslike] = useState(isLike);
   const [likedCount, setLikedCount] = useState<number>(likes);
-
-  console.log("like", likes);
-  // console.log("likedCount", likedCount);
+  const dispatch = useDispatch();
+  // console.log("like", likes);
   const id_Reply = idReply;
   const idThread = id;
-  console.log("idReply", idReply);
+  // console.log("idReply", idReply);
   const [type, setType] = useState(typeLike);
-  // console.log("type", type);
   const token = localStorage.getItem("token");
   const tost = useToast();
-  const { hendelLike, hendelUnlike } = useChatUser();
-  const { likeReply, unlikeReply } = useReply();
+  const { hendelLike, hendelUnlike, useGetThread } = useChatUser();
+  const { likeReply, unlikeReply, getThreadOne } = useReply();
   const handleLikeClick = () => {
     if (!token) {
       tost({
@@ -39,6 +38,7 @@ export const Liked = ({ isLike, likes, id, typeLike, idReply }: like) => {
       if (!islike) {
         if (type === "thread") {
           hendelLike(idThread);
+          getThreadOne(idThread);
         } else {
           likeReply(id_Reply);
         }

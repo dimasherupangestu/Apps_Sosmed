@@ -1,11 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { axiosIntelisen } from "../../lib/axios";
-import { useState } from "react";
-import { ChatUserProps } from "../../types/TypeData";
 import { useToast } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootType } from "../../types/storeType";
-import { GET_THREAD } from "../../store/Slice/useSliceThered";
+import { axiosIntelisen } from "../../../lib/axios";
+import { GET_THREAD } from "../../../store/Slice/useSliceThered";
+import { RootType } from "../../../types/storeType";
 
 export const useChatUser = () => {
   const dispatch = useDispatch();
@@ -120,18 +117,6 @@ export const useChatUser = () => {
       });
       // naviget("/login");
     }
-
-    const hendelLikeDetail = async () => {
-      if (!token) {
-        tost({
-          title: "Please Login first",
-          status: "info",
-          position: "top",
-        });
-        return;
-      } else {
-      }
-    };
   };
   return {
     useGetThread,

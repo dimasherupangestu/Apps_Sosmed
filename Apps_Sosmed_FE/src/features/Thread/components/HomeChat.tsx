@@ -9,13 +9,13 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
-import { InputStatus } from "./InputStatus";
+import { InputStatus } from "../../../components/InputStatus";
 import { useRef } from "react";
 import { ModalChat } from "./ModalChat";
 import { HomeCradUsers } from "./HomeCradUsers";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootType } from "../types/storeType";
+import { RootType } from "../../../types/storeType";
 
 export const HomeChat = () => {
   const getIdUser = useSelector((state: RootType) => state.userStore.id);
@@ -37,24 +37,17 @@ export const HomeChat = () => {
     }
   };
   return (
-    <Box
-      w={"100%"}
-      h={"100%"}
-      bg={"#171923"}
-      py={4}
-
-      // borderLeft={"1px solid #555"}
-    >
+    <Box w={"100%"} h={"100%"} bg={"#171923"} py={4}>
       <Box>
         <Heading color={"white"} fontSize={["xl", "2xl"]} px={4}>
           Home
         </Heading>
         <Box onClick={hendelOpen}>
+          {/* component input status */}
           <InputStatus />
         </Box>
 
         {/* awal modal*/}
-
         <Modal
           initialFocusRef={initialRef}
           finalFocusRef={finalRef}
@@ -69,11 +62,11 @@ export const HomeChat = () => {
             <Box py={3}>
               <ModalChat />
             </Box>
-            {/*  */}
           </ModalContent>
         </Modal>
         {/* AKHIR modal*/}
 
+        {/* Component thread */}
         <HomeCradUsers />
       </Box>
     </Box>

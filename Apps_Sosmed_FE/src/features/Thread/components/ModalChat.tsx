@@ -12,9 +12,9 @@ import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { axiosIntelisen } from "../lib/axios";
-import { ChatUserProps, IFrom } from "../types/TypeData";
-import { RootType } from "../types/storeType";
+import { axiosIntelisen } from "../../../lib/axios";
+import { ChatUserProps, IFrom } from "../../../types/TypeData";
+import { RootType } from "../../../types/storeType";
 import { RiImageAddLine } from "react-icons/ri";
 import { LuImagePlus } from "react-icons/lu";
 

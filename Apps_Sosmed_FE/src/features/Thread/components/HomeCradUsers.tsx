@@ -18,20 +18,17 @@ import { CgComment } from "react-icons/cg";
 import { SlOptions } from "react-icons/sl";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useChatUser } from "../features/Thread/useThread";
-import { RootType } from "../types/storeType";
+import { useChatUser } from "../hook/useThread";
+import { RootType } from "../../../types/storeType";
 
 export const HomeCradUsers: React.FC = () => {
-  // const id = useParams.id!;
-
   const thread = useSelector((state: RootType) => state.GetThread.data);
   const user = useSelector((state: RootType) => state.userStore);
-  // console.log("data", dataThread);
 
-  const tost = useToast();
-
+  // const tost = useToast();
   const { useGetThread, hendelLike, hendelDelete, hendelUnlike } =
     useChatUser();
+
   useEffect(() => {
     useGetThread(user.id);
   }, [user.id]);

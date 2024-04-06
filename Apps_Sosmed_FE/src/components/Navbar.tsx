@@ -14,7 +14,7 @@ import {
 import { IconNav } from "./IconNav";
 import { Link } from "react-router-dom";
 import { LuImagePlus } from "react-icons/lu";
-import { ModalChat } from "./ModalChat";
+import { ModalChat } from "../features/Thread/components/ModalChat";
 import { useRef } from "react";
 import { FaFeatherAlt, FaRegIdCard } from "react-icons/fa";
 import { MdLogin } from "react-icons/md";

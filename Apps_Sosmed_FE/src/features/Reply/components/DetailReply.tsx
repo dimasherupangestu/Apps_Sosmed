@@ -17,68 +17,28 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { SlOptions } from "react-icons/sl";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { useReply } from "../features/Reply/useReply";
-import { Liked } from "../features/like/Liked";
-import { axiosIntelisen } from "../lib/axios";
-import { RootType } from "../types/storeType";
-import { InputStatus } from "./InputStatus";
+import { useReply } from "../hook/useReply";
+import { Liked } from "../../like/Liked";
+import { axiosIntelisen } from "../../../lib/axios";
+import { RootType } from "../../../types/storeType";
+import { InputStatus } from "../../../components/InputStatus";
+import { formatDistanceToNow, parseISO } from "date-fns";
 4;
 
 export const DetailReply = () => {
   const { id } = useParams();
   // console.log("id", id);
-  const tost = useToast();
-
   const token = localStorage.getItem("token");
-  const { getThreadOne } = useReply();
+  const { getThreadOne, hendelDelete } = useReply();
 
   const user = useSelector((state: RootType) => state.userStore);
   const threadOne = useSelector((state: RootType) => state.GetIdThread.data);
   console.log("ThreadOne", threadOne);
 
-  // const { hendelLike, hendelUnlike, useGetThread } = useChatUser();
-
   useEffect(() => {
     getThreadOne(id);
   }, [user, Liked]);
-  const hendelDelete = async (id: number, id_user: number) => {
-    if (user.id !== id_user) {
-      tost({
-        position: "top",
-        status: "info",
-        title: "This is not your author",
-      });
-    } else {
-      try {
-        const response = await axiosIntelisen.delete(`/reply/${id}?=${user}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log(response);
-        tost({
-          position: "top",
-          status: "success",
-          title: "success delete ",
-        });
-        window.location.reload();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-  const convertDate = (time: string) => {
-    const date = new Date(time);
 
-    const timeConvert = date.toLocaleTimeString("id-ID", {
-      day: "numeric",
-      month: "long",
-      hour: "numeric",
-      minute: "numeric",
-      year: "numeric",
-    });
-    return timeConvert;
-  };
   return (
     <Box w={"100%"} h={"full"} minH={"100vh"} color={"#fff"}>
       <Box px={4}>
@@ -201,7 +161,8 @@ export const DetailReply = () => {
                     color={"RGBA(255, 255, 255, 0.48)"}
                     fontSize={["0.7rem", "0.8rem", "0.7rem"]}
                   >
-                    {convertDate(item?.created_at)}
+                    {item.created_at &&
+                      formatDistanceToNow(parseISO(item.created_at))}
                   </Text>
                   <Box h={"15px"} ml={"auto"} px={2} textAlign={"center"}>
                     <Menu isLazy>
