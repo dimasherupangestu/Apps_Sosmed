@@ -18,15 +18,14 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { IoMdArrowRoundBack } from "react-icons/io";
+import { useEffect } from "react";
+import { CgComment } from "react-icons/cg";
+import { SlOptions } from "react-icons/sl";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { RootType } from "../types/storeType";
 import { useFollow } from "../features/Follow/componen/hook/useFollow";
-import { SlOptions } from "react-icons/sl";
 import { useChatUser } from "../features/Thread/useThread";
-import { CgComment } from "react-icons/cg";
+import { RootType } from "../types/storeType";
 
 export const ProfileUser = () => {
   let boxBg = useColorModeValue("#1A202C", "white !important");

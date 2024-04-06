@@ -1,55 +1,27 @@
-import React, { useState } from "react";
 import {
+  Avatar,
   Box,
   Button,
   FormControl,
   HStack,
-  Image,
   Input,
   useToast,
 } from "@chakra-ui/react";
+import React, { useState } from "react";
 
-import { useFormik } from "formik";
 import { useMutation } from "@tanstack/react-query";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { axiosIntelisen } from "../lib/axios";
 import { ChatUserProps, IFrom } from "../types/TypeData";
-import { useNavigate } from "react-router-dom";
+import { RootType } from "../types/storeType";
+import { RiImageAddLine } from "react-icons/ri";
+import { LuImagePlus } from "react-icons/lu";
 
 export const ModalChat = () => {
-  // const formik = useFormik({
-  //   initialValues: {
-  //     content: "",
-  //     author: getIdUser,
-  //     image: "",
-  //   },
-  //   onSubmit: async () => {
-  //     const { content, image, author } = formik.values;
-  //     console.log(image);
-  //     mutate({
-  //       content,
-  //       author,
-  //       image,
-  //     });
-  //     formik.setFieldValue("content", "");
-  //     formik.setFieldValue("image", "");
-  //     tost({
-  //       title: "Successfully added a post",
-  //       status: "success",
-  //       position: "top",
-  //       duration: 2000,
-  //     });
-  //     window.location.href = "/";
-  //   },
-  // });
-
-  // const hendelInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   formik.setFieldValue("content", event.target.value);
-
-  //   formik.setFieldValue("image", event.target.value[0]);
-  // };
   const tost = useToast();
   const naviget = useNavigate();
-  const getIdUser = localStorage.getItem("id");
+  const user = useSelector((state: RootType) => state.userStore);
   const token = localStorage.getItem("token");
 
   const config = {
@@ -63,8 +35,6 @@ export const ModalChat = () => {
     content: "",
     image: null,
   });
-
-  // console.log("file", file);
 
   const hendelSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,12 +64,11 @@ export const ModalChat = () => {
     <Box>
       <Box>
         <HStack w={"100%"} mt={5} px={4} pb={5}>
-          <Image
-            borderRadius="full"
+          <Avatar
             mb={"auto"}
             boxSize="3.5em"
-            src="https://bit.ly/dan-abramov"
-            alt="Dan Abramov"
+            name={user.name}
+            src={user.picture ? user.picture : user.username}
           />
           <form onSubmit={hendelSubmit} style={{ width: "100%" }}>
             <FormControl
@@ -130,12 +99,18 @@ export const ModalChat = () => {
               <Box
                 mr={"auto"}
                 zIndex={"1"}
-                // color="green"
+                as="label"
+                htmlFor="image"
+                cursor="pointer"
+                color="green"
                 bg={"#171923"}
-
-                // _hover={{ cursor: "pointer", color: "white" }}
+                _hover={{ cursor: "pointer", color: "white" }}
               >
+                <Box ml={3}>
+                  <LuImagePlus size={"2rem"} />
+                </Box>
                 <Input
+                  id="image"
                   type="file"
                   name="image"
                   onChange={(e) =>
@@ -148,6 +123,7 @@ export const ModalChat = () => {
                   mr={"2rem"}
                   w={"100%"}
                   border={"none"}
+                  display={"none"}
                 />
               </Box>
               <Button

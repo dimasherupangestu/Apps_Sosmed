@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   FormControl,
@@ -13,9 +14,12 @@ import { axiosIntelisen } from "../lib/axios";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { IFrom } from "../types/TypeData";
+import { RootType } from "../types/storeType";
+import { useSelector } from "react-redux";
 
 export const InputStatus = () => {
   const { id } = useParams();
+  const user = useSelector((state: RootType) => state.userStore);
   const token = localStorage.getItem("token");
   const toast = useToast();
   const config = {
@@ -65,13 +69,8 @@ export const InputStatus = () => {
         pb={5}
         borderBottom={"1px solid #555"}
       >
-        <Image
-          borderRadius="full"
-          boxSize="3.5em"
-          src="https://bit.ly/dan-abramov"
-          alt="Dan Abramov"
-        />
-        <form onSubmit={hendelSubmit}>
+        <Avatar boxSize="3.2rem" src={user.picture} name={user.username} />
+        <form onSubmit={hendelSubmit} style={{ width: "100%" }}>
           <FormControl ml={1} w={"100%"} display={"flex"} gap={3}>
             <Input
               type="text"
@@ -83,9 +82,21 @@ export const InputStatus = () => {
                 setFrom((prev) => ({ ...prev, content: e.target.value }))
               }
             />
-            <Box color="green" _hover={{ cursor: "pointer", color: "white" }}>
+            <Box
+              color="green"
+              as="label"
+              ml={"auto"}
+              htmlFor="image"
+              _hover={{ cursor: "pointer", color: "white" }}
+            >
+              <Box ml={"auto"}>
+                <LuImagePlus size={"2rem"} />
+              </Box>
               <Input
                 type="file"
+                id="image"
+                display={"none"}
+                accept="image/jpg, image/jpeg, image/png"
                 name="image"
                 border={"none"}
                 onChange={(e) =>
@@ -98,7 +109,7 @@ export const InputStatus = () => {
               colorScheme={"green"}
               type="submit"
               h={"2rem"}
-              w={"5rem"}
+              w={"6rem"}
               borderRadius={"20px"}
             >
               Post

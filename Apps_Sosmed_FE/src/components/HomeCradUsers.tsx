@@ -1,7 +1,6 @@
 import {
   Avatar,
   Box,
-  Button,
   HStack,
   Heading,
   Image,
@@ -9,44 +8,28 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Spinner,
   Text,
   useToast,
 } from "@chakra-ui/react";
+import { formatDistanceToNow, parseISO } from "date-fns";
+import { useEffect } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { CgComment } from "react-icons/cg";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { ChatUserProps } from "../types/TypeData";
 import { SlOptions } from "react-icons/sl";
-import { axiosIntelisen } from "../lib/axios";
-import { useChatUser } from "../features/Thread/useThread";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useChatUser } from "../features/Thread/useThread";
 import { RootType } from "../types/storeType";
-import { formatDistanceToNow, parseISO } from "date-fns";
 
 export const HomeCradUsers: React.FC = () => {
   // const id = useParams.id!;
-  const token = localStorage.getItem("token");
+
   const thread = useSelector((state: RootType) => state.GetThread.data);
   const user = useSelector((state: RootType) => state.userStore);
   // console.log("data", dataThread);
 
   const tost = useToast();
-  const naviget = useNavigate();
 
-  const convertDate = (time: string) => {
-    const date = new Date(time);
-
-    const timeConvert = date.toLocaleTimeString("id-ID", {
-      day: "numeric",
-      month: "long",
-      hour: "numeric",
-      minute: "numeric",
-      year: "numeric",
-    });
-    return timeConvert;
-  };
   const { useGetThread, hendelLike, hendelDelete, hendelUnlike } =
     useChatUser();
   useEffect(() => {

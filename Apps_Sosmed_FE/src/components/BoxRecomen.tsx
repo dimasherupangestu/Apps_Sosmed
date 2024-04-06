@@ -1,19 +1,9 @@
-import { Avatar, Box, Button, Flex, HStack, Text } from "@chakra-ui/react";
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootType } from "../types/storeType";
-import { axiosIntelisen } from "../lib/axios";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
+import { axiosIntelisen } from "../lib/axios";
 
 import { AuthorProps } from "../types/TypeData";
 import { CardUser } from "./CardUser";
-
-// interface UserData {
-//   id: number;
-//   name: string;
-//   username: string;
-//   avatarUrl: string;
-// }
 
 export const BoxRecomen = () => {
   // const user = useSelector((state: RootType) => state.getUserAll);

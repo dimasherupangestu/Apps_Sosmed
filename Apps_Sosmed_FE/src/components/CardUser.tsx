@@ -1,13 +1,10 @@
-import { Avatar, Box, Button, HStack, Text, useToast } from "@chakra-ui/react";
-import React, { useEffect } from "react";
-import { AuthorProps } from "../types/TypeData";
+import { Avatar, Box, Button, HStack, Text } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { RootType } from "../types/storeType";
-import { useMutation } from "@tanstack/react-query";
-import { axiosIntelisen } from "../lib/axios";
 import { useFollow } from "../features/Follow/componen/hook/useFollow";
+import { RootType } from "../types/storeType";
 export const CardUser = (data: any) => {
-  console.log("dataid", data);
+  // console.log("dataid", data);
   const user = useSelector((state: RootType) => state.userStore);
   const token = localStorage.getItem("token");
 

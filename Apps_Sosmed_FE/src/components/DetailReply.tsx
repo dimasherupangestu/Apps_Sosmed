@@ -11,20 +11,18 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-4;
-import { IoMdArrowRoundBack } from "react-icons/io";
-import { Link, useParams } from "react-router-dom";
-import { AiFillHeart } from "react-icons/ai";
-import { CgComment } from "react-icons/cg";
-import { InputStatus } from "./InputStatus";
-import { axiosIntelisen } from "../lib/axios";
-import { SlOptions } from "react-icons/sl";
-import { useReply } from "../features/Reply/useReply";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootType } from "../types/storeType";
-import { useChatUser } from "../features/Thread/useThread";
+import { CgComment } from "react-icons/cg";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { SlOptions } from "react-icons/sl";
+import { useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { useReply } from "../features/Reply/useReply";
 import { Liked } from "../features/like/Liked";
+import { axiosIntelisen } from "../lib/axios";
+import { RootType } from "../types/storeType";
+import { InputStatus } from "./InputStatus";
+4;
 
 export const DetailReply = () => {
   const { id } = useParams();

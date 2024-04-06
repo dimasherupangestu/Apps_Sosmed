@@ -14,9 +14,11 @@ import { useRef } from "react";
 import { ModalChat } from "./ModalChat";
 import { HomeCradUsers } from "./HomeCradUsers";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootType } from "../types/storeType";
 
 export const HomeChat = () => {
-  const getIdUser = localStorage.getItem("id");
+  const getIdUser = useSelector((state: RootType) => state.userStore.id);
   const tost = useToast();
   const naviget = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();

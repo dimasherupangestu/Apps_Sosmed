@@ -4,18 +4,14 @@ import {
   Button,
   Center,
   Flex,
-  HStack,
   Image,
   Input,
-  Link,
-  Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from "react";
 import { RiImageAddFill } from "react-icons/ri";
+import { useParams } from "react-router-dom";
 import { useProfile } from "../features/Profile/useProfile";
-import { axiosIntelisen } from "../lib/axios";
 
 export const EditProfile = () => {
   const { id } = useParams();
