@@ -51,15 +51,16 @@ export const ProfileSlideBar = () => {
       </Text>
 
       <Image
-        src="https://i.ibb.co/xmP2pS6/Profile.png"
+        src={user.cover_photo || "https://i.ibb.co/xmP2pS6/Profile.png"}
         maxW="100%"
+        h={"7.4rem"}
         borderRadius="20px"
       />
       <Flex flexDirection="column" mb="10px">
         <Avatar
           src={user.picture}
           name={user.name}
-          border="1px solid #555"
+          border="5px solid #1A202C"
           ml={"20px"}
           borderColor={boxBg}
           width="68px"

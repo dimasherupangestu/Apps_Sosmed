@@ -6,7 +6,7 @@ const data: ThreadOne = {
   content: "",
   image: "",
   likes: [],
-  isLike: false,
+  islike: false,
   replies: [],
   created_at: "",
   author: {
@@ -29,7 +29,7 @@ export const useSliceTheredOne = createSlice({
       // console.log("tes", action.payload.data);
     },
     UpdateLike: (state, action) => {
-      state.data.isLike = action.payload;
+      state.data.islike = action.payload;
       state.data.likes = action.payload;
     },
   },

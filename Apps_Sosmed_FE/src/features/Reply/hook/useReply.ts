@@ -12,9 +12,9 @@ export const useReply = () => {
   const dispatch = useDispatch();
   const { useGetThread } = useChatUser();
 
-  const getThreadOne = async (id: any) => {
+  const getThreadOne = async (id: number, id_user: number) => {
     try {
-      const response = await axiosIntelisen.get(`/thread/${id}?id=${user}`);
+      const response = await axiosIntelisen.get(`/thread/${id}?id=${id_user}`);
       // console.log("data", response);
       dispatch(GET_THREAD_One({ data: response.data }));
       useGetThread(user);

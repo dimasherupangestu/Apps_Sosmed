@@ -1,21 +1,18 @@
 import {
-  Avatar,
   Box,
-  Heading,
-  HStack,
   Input,
   InputGroup,
   InputLeftElement,
   Text,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MdPersonSearch } from "react-icons/md";
-import { axiosIntelisen } from "../../../lib/axios";
 import { useDispatch, useSelector } from "react-redux";
+import { CardUser } from "../../../components/CardUser";
+import { axiosIntelisen } from "../../../lib/axios";
 import { Get_Users } from "../../../store/Slice/useSliceUserAll";
 import { RootType } from "../../../types/storeType";
 import { IUser } from "../../../types/TypeData";
-import { CardUser } from "../../../components/CardUser";
 
 export const DetailSearch = () => {
   const [search, setSearch] = useState("");

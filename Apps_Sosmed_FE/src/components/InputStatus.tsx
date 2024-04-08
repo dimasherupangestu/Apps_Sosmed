@@ -11,15 +11,19 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { LuImagePlus } from "react-icons/lu";
 import { axiosIntelisen } from "../lib/axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { IFrom } from "../types/TypeData";
 import { RootType } from "../types/storeType";
 import { useSelector } from "react-redux";
+import { useReply } from "../features/Reply/hook/useReply";
+import { number } from "yup";
 
 export const InputStatus = () => {
   const { id } = useParams();
   const user = useSelector((state: RootType) => state.userStore);
+  const { getThreadOne } = useReply();
+  const naviget = useNavigate();
   const token = localStorage.getItem("token");
   const toast = useToast();
   const config = {
@@ -44,6 +48,14 @@ export const InputStatus = () => {
       });
       return;
     }
+    if (!form.content.trim() && !form.image) {
+      toast({
+        title: "Content and image are required",
+        status: "warning",
+        position: "top",
+      });
+      return;
+    }
     try {
       const response = await axiosIntelisen.post("/reply/thread", form, config);
       // console.log(response);
@@ -53,8 +65,9 @@ export const InputStatus = () => {
         position: "top",
         status: "success",
       });
+      getThreadOne(Number(id), user.id);
+      // naviget(`/detailStatus/${id}`);
       window.location.reload();
-      return response.data;
     } catch (error) {
       console.log(error);
     }

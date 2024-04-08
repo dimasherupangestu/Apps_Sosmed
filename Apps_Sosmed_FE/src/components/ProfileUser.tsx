@@ -26,9 +26,9 @@ import { Link } from "react-router-dom";
 import { useFollow } from "../features/Follow/componen/hook/useFollow";
 import { useChatUser } from "../features/Thread/hook/useThread";
 import { RootType } from "../types/storeType";
+import { CardUser } from "./CardUser";
 
 export const ProfileUser = () => {
-  let boxBg = useColorModeValue("#1A202C", "white !important");
   let mainText = useColorModeValue("white", "white");
   let secondaryText = useColorModeValue("gray.400", "gray.400");
   // const usernameToken = localStorage.getItem("username");
@@ -54,7 +54,7 @@ export const ProfileUser = () => {
 
   return (
     <>
-      <Box w={"100%"} height={"100%"} bg={"#171923"}>
+      <Box w={"97%"} mx={"auto"} height={"100%"} bg={"#171923"}>
         <Flex
           borderRadius="20px"
           bg={"#1A202C"}
@@ -82,7 +82,7 @@ export const ProfileUser = () => {
               name={user.name}
               border="5px solid #1A202C"
               ml={"20px"}
-              borderColor={boxBg}
+              borderColor={"#1A202C"}
               width="68px"
               height="68px"
               mt="-38px"
@@ -298,134 +298,14 @@ export const ProfileUser = () => {
             <TabPanel>
               <Box w={"100%"} bg={"#171923"} borderRadius={"10px"}>
                 {followers.map((data, index) => (
-                  <Box
-                    key={index}
-                    bg={"#1A202C"}
-                    mb={4}
-                    borderRadius={"10px"}
-                    px={4}
-                    py={1}
-                  >
-                    <HStack mb={6} mt={4}>
-                      <Avatar
-                        size={"md"}
-                        bg={"green.500"}
-                        name={data.name}
-                        src={data.picture}
-                      />
-                      <Box w={"100%"}>
-                        <Heading
-                          fontSize={["sm", "md"]}
-                          textTransform={"capitalize"}
-                        >
-                          {data.name}
-                        </Heading>
-                        <Text
-                          color={"RGBA(255, 255, 255, 0.48)"}
-                          fontSize={"0.9rem"}
-                        >
-                          @{data.username}
-                        </Text>
-                        <Text w={"80%"} fontSize={"0.9rem"}>
-                          {data.bio}
-                        </Text>
-                      </Box>
-                      {!following.some((item) => item.id === data.id) ? (
-                        <Button
-                          border={"1px solid #555"}
-                          bg={"none"}
-                          color={"gray.400"}
-                          w={"6rem"}
-                          px={6}
-                          h={"2.3rem"}
-                          ml={"auto"}
-                          borderRadius={"20px"}
-                          fontSize={"0.9rem"}
-                          _hover={{ bg: "green.400", color: "white" }}
-                          onClick={() => (
-                            hendelFollow(data.id), getFollowers(user.id)
-                          )}
-                        >
-                          Follow
-                        </Button>
-                      ) : (
-                        <Button
-                          border={"1px solid #555"}
-                          bg={"green.400"}
-                          color={"white"}
-                          px={6}
-                          w={"6.4rem"}
-                          h={"2.4rem"}
-                          ml={"auto"}
-                          borderRadius={"20px"}
-                          fontSize={"0.9rem"}
-                          _hover={{ bg: "none", color: "gray.400" }}
-                          onClick={() => (
-                            hendelUnfollow(data.id), getFollowers(user.id)
-                          )}
-                        >
-                          Unfollow
-                        </Button>
-                      )}
-                    </HStack>
-                  </Box>
+                  <CardUser key={index} {...data} />
                 ))}
               </Box>
             </TabPanel>
             <TabPanel>
               <Box w={"100%"}>
                 {following.map((item, index) => (
-                  <Box
-                    key={index}
-                    bg={"#1A202C"}
-                    mb={4}
-                    borderRadius={"10px"}
-                    px={4}
-                    py={1}
-                  >
-                    <HStack mb={6} mt={4}>
-                      <Avatar
-                        size={"md"}
-                        bg={"green.500"}
-                        name={item.name}
-                        src={item.picture}
-                      />
-                      <Box w={"100%"}>
-                        <Heading
-                          fontSize={["sm", "md"]}
-                          textTransform={"capitalize"}
-                        >
-                          {item.name}
-                        </Heading>
-                        <Text
-                          color={"RGBA(255, 255, 255, 0.48)"}
-                          fontSize={"0.9rem"}
-                        >
-                          @{item.username}
-                        </Text>
-                        <Text w={"80%"} fontSize={"0.9rem"}>
-                          {item.bio}
-                        </Text>
-                      </Box>
-                      <Button
-                        border={"1px solid #555"}
-                        bg={"green.400"}
-                        color={"white"}
-                        px={6}
-                        w={"6.4rem"}
-                        h={"2.4rem"}
-                        ml={"auto"}
-                        borderRadius={"20px"}
-                        fontSize={"0.9rem"}
-                        _hover={{ bg: "none", color: "gray.400" }}
-                        onClick={() => (
-                          hendelUnfollow(item.id), getFollowers(user.id)
-                        )}
-                      >
-                        Unfollow
-                      </Button>
-                    </HStack>
-                  </Box>
+                  <CardUser key={index} {...item} />
                 ))}
               </Box>
             </TabPanel>

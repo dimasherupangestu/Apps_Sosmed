@@ -4,7 +4,9 @@ import { AiFillHeart } from "react-icons/ai";
 import { useChatUser } from "../Thread/hook/useThread";
 import { axiosIntelisen } from "../../lib/axios";
 import { useReply } from "../Reply/hook/useReply";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { UpdateLike } from "../../store/Slice/getTheadOne";
+import { RootType } from "../../types/storeType";
 
 interface like {
   isLike: boolean;
@@ -18,15 +20,16 @@ export const Liked = ({ isLike, likes, id, typeLike, idReply }: like) => {
   const [islike, setIslike] = useState(isLike);
   const [likedCount, setLikedCount] = useState<number>(likes);
   const dispatch = useDispatch();
-  // console.log("like", likes);
   const id_Reply = idReply;
   const idThread = id;
-  // console.log("idReply", idReply);
   const [type, setType] = useState(typeLike);
   const token = localStorage.getItem("token");
   const tost = useToast();
   const { hendelLike, hendelUnlike, useGetThread } = useChatUser();
   const { likeReply, unlikeReply, getThreadOne } = useReply();
+  const threadOne = useSelector((state: RootType) => state.GetIdThread.data);
+  const user_id = useSelector((state: RootType) => state.userStore.id);
+  // console.log("tes", threadOne);
   const handleLikeClick = () => {
     if (!token) {
       tost({
@@ -38,17 +41,20 @@ export const Liked = ({ isLike, likes, id, typeLike, idReply }: like) => {
       if (!islike) {
         if (type === "thread") {
           hendelLike(idThread);
-          getThreadOne(idThread);
+          getThreadOne(idThread, user_id);
+          setLikedCount(likedCount + 1);
         } else {
           likeReply(id_Reply);
+          getThreadOne(idThread, user_id);
         }
         setIslike(true);
-        setLikedCount(likedCount + 1);
       } else {
         if (type === "thread") {
           hendelUnlike(idThread);
+          getThreadOne(idThread, user_id);
         } else {
           unlikeReply(id_Reply);
+          getThreadOne(idThread, user_id);
         }
         setIslike(false);
         setLikedCount(likedCount - 1);
@@ -59,7 +65,7 @@ export const Liked = ({ isLike, likes, id, typeLike, idReply }: like) => {
   return (
     <HStack>
       <Box onClick={handleLikeClick}>
-        {islike ? (
+        {(threadOne.likes.lenght && type === "thread") || islike ? (
           <Box color="white" _hover={{ color: "red", cursor: "pointer" }}>
             <AiFillHeart color="red" size={23} />
           </Box>
@@ -70,7 +76,9 @@ export const Liked = ({ isLike, likes, id, typeLike, idReply }: like) => {
         )}
       </Box>
       <Text color={"rgba(255, 255, 255, 0.48)"} fontSize={["0.7rem", "0.8rem"]}>
-        {likedCount}
+        {threadOne.likes.lenght && type === "thread"
+          ? threadOne.likes
+          : likedCount}
       </Text>
     </HStack>
   );

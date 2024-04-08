@@ -38,7 +38,7 @@ export interface IFrom {
 export type Thread = {
   id: number;
   content: string;
-  image: string[] | null;
+  image: string | null;
   like: number;
   isLike: boolean;
   replies: number;
@@ -56,7 +56,7 @@ export type ThreadOne = {
   content: string;
   image?: any | string[];
   likes: any;
-  isLike: boolean;
+  islike: boolean;
   replies?: [];
   created_at?: string;
   author: {

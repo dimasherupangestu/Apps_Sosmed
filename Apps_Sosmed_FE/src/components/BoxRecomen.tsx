@@ -47,6 +47,7 @@ export const BoxRecomen = () => {
                 id={data.id}
                 refect={refetch}
                 name={data.name}
+                // bio={data.bio}
                 picture={data.picture}
                 username={data.username}
                 follower={data.follower}

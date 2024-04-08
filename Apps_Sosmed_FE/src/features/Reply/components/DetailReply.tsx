@@ -27,17 +27,18 @@ import { formatDistanceToNow, parseISO } from "date-fns";
 
 export const DetailReply = () => {
   const { id } = useParams();
-  // console.log("id", id);
   const token = localStorage.getItem("token");
   const { getThreadOne, hendelDelete } = useReply();
 
   const user = useSelector((state: RootType) => state.userStore);
   const threadOne = useSelector((state: RootType) => state.GetIdThread.data);
-  console.log("ThreadOne", threadOne);
+  // console.log("theadAll", theadAll);
 
   useEffect(() => {
-    getThreadOne(id);
-  }, [user, Liked]);
+    if (!token) return;
+    // getThread(Number(id), user.id);
+    getThreadOne(Number(id), user.id);
+  }, [id, user]);
 
   return (
     <Box w={"100%"} h={"full"} minH={"100vh"} color={"#fff"}>
@@ -75,10 +76,10 @@ export const DetailReply = () => {
                   color={"RGBA(255, 255, 255, 0.48)"}
                   fontSize={["0.7rem", "0.8rem", "0.7rem"]}
                 >
-                  {/* {convertDate(threadOne?.created_at)} */}
+                  {threadOne.created_at &&
+                    formatDistanceToNow(parseISO(threadOne.created_at))}
                 </Text>
               </HStack>
-
               <Text
                 color={"RGBA(255, 255, 255, 0.48)"}
                 fontSize={["0.7rem", "0.8rem", "0.7rem"]}
@@ -102,9 +103,8 @@ export const DetailReply = () => {
               {threadOne?.image && <Image src={threadOne.image} />}
             </HStack>
             <HStack mt={2} pb={3}>
-              {""}
               <Liked
-                isLike={threadOne.isLike}
+                isLike={threadOne.islike}
                 likes={threadOne.likes.length}
                 id={threadOne.id}
                 typeLike="thread"

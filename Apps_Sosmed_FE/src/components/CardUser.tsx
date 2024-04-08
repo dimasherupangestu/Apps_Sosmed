@@ -23,6 +23,10 @@ export const CardUser = (data: any) => {
           <Text color={"gray.400"} fontSize={"0.7rem"}>
             @{data.username}
           </Text>
+
+          <Text color={"gray.400"} fontSize={"0.7rem"}>
+            {data.bio && data.bio}
+          </Text>
         </Text>
 
         {!following.some((foll) => foll.id === data.id) ? (
