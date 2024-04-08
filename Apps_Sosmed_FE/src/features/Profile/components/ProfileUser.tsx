@@ -23,20 +23,19 @@ import { CgComment } from "react-icons/cg";
 import { SlOptions } from "react-icons/sl";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useFollow } from "../features/Follow/componen/hook/useFollow";
-import { useChatUser } from "../features/Thread/hook/useThread";
-import { RootType } from "../types/storeType";
-import { CardUser } from "./CardUser";
+import { useFollow } from "../../Follow/hook/useFollow";
+import { useChatUser } from "../../Thread/hook/useThread";
+import { RootType } from "../../../types/storeType";
+import { CardUser } from "../../../components/CardUser";
 
 export const ProfileUser = () => {
   let mainText = useColorModeValue("white", "white");
   let secondaryText = useColorModeValue("gray.400", "gray.400");
   // const usernameToken = localStorage.getItem("username");
-  const { useGetThread, hendelDelete } = useChatUser();
   const token = localStorage.getItem("token");
   const user = useSelector((state: RootType) => state.userStore);
-  const { hendelFollow, hendelUnfollow, getFollowers, followers, following } =
-    useFollow();
+  const { useGetThread, hendelDelete } = useChatUser();
+  const { getFollowers, followers, following } = useFollow();
 
   const GetThread = useSelector((state: RootType) => state.GetThread.data);
   // console.log("GetThread", GetThread);
@@ -298,14 +297,14 @@ export const ProfileUser = () => {
             <TabPanel>
               <Box w={"100%"} bg={"#171923"} borderRadius={"10px"}>
                 {followers.map((data, index) => (
-                  <CardUser key={index} {...data} />
+                  <CardUser key={index} {...data} type="follow" />
                 ))}
               </Box>
             </TabPanel>
             <TabPanel>
               <Box w={"100%"}>
                 {following.map((item, index) => (
-                  <CardUser key={index} {...item} />
+                  <CardUser key={index} {...item} type="follow" />
                 ))}
               </Box>
             </TabPanel>

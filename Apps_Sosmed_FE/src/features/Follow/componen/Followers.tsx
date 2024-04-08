@@ -14,7 +14,7 @@ import {
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootType } from "../../../types/storeType";
-import { useFollow } from "./hook/useFollow";
+import { useFollow } from "../hook/useFollow";
 import { CardUser } from "../../../components/CardUser";
 
 export const Followers = () => {
@@ -48,14 +48,14 @@ export const Followers = () => {
             <TabPanel>
               <Box w={"100%"}>
                 {followers.map((data, index) => (
-                  <CardUser key={index} {...data} />
+                  <CardUser key={index} {...data} type="follow" />
                 ))}
               </Box>
             </TabPanel>
             <TabPanel>
               <Box w={"100%"}>
                 {following.map((item, index) => (
-                  <CardUser key={index} {...item} />
+                  <CardUser key={index} {...item} type="follow" />
                 ))}
               </Box>
             </TabPanel>

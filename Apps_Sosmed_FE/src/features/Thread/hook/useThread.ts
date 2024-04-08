@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { axiosIntelisen } from "../../../lib/axios";
 import { GET_THREAD } from "../../../store/Slice/useSliceThered";
 import { RootType } from "../../../types/storeType";
-import { useReply } from "../../Reply/hook/useReply";
 
 export const useChatUser = () => {
   const dispatch = useDispatch();
@@ -18,7 +17,7 @@ export const useChatUser = () => {
       dispatch(GET_THREAD({ data: response.data }));
 
       // dispatch(Fetch_Thread(useGetThread(id)));
-      // console.log(response);
+      // console.log(response.data);
     } catch (error) {
       console.log(error);
     }

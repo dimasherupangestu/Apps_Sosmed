@@ -1,13 +1,13 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import { Home } from "./pages/Home";
-import { Register } from "./pages/Register";
-import { Login } from "./pages/Login";
 import { DetailStatusPages } from "./pages/DetailStatusPages";
-import { Search } from "./pages/Search";
-import { FollowerPage } from "./pages/FollowerPage";
-import { ProlifePages } from "./pages/ProlifePages";
 import { EditProfilePage } from "./pages/EditProfilePages";
+import { FollowerPage } from "./pages/FollowerPage";
+import { Home } from "./pages/Home";
+import { Login } from "./pages/Login";
+import { ProlifePages } from "./pages/ProlifePages";
+import { Register } from "./pages/Register";
+import { Search } from "./pages/Search";
 
 function App() {
   return (

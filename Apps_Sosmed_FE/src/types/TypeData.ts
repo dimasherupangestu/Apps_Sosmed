@@ -37,11 +37,12 @@ export interface IFrom {
 
 export type Thread = {
   id: number;
+  type?: string;
   content: string;
   image: string | null;
-  like: number;
-  isLike: boolean;
-  replies: number;
+  like?: number | [];
+  isLike?: boolean;
+  replies: any;
   created_at: string;
   author: {
     id: number;

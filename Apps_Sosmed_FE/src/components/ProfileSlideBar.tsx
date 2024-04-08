@@ -19,6 +19,7 @@ import { RootType } from "../types/storeType";
 import { useEffect } from "react";
 
 import useUser from "../features/User/hook/useUser";
+import { Link } from "react-router-dom";
 
 export const ProfileSlideBar = () => {
   let boxBg = useColorModeValue("#1A202C", "white !important");
@@ -69,19 +70,21 @@ export const ProfileSlideBar = () => {
           borderRadius="50%"
         />
         <Box ml={"auto"} mt={"-20px"} color={"white"}>
-          <Button
-            w={"100%"}
-            height={"30px"}
-            px={4}
-            py={4}
-            bg={"none"}
-            border={"1px solid #555"}
-            borderRadius={"40px"}
-            color={"white"}
-            _hover={{ bg: "#38a169" }}
-          >
-            Edit Profile
-          </Button>
+          <Link to={`/profile`}>
+            <Button
+              w={"100%"}
+              height={"30px"}
+              px={4}
+              py={4}
+              bg={"none"}
+              border={"1px solid #555"}
+              borderRadius={"40px"}
+              color={"white"}
+              _hover={{ bg: "#38a169" }}
+            >
+              Edit Profile
+            </Button>
+          </Link>
         </Box>
         <Text
           fontWeight="600"

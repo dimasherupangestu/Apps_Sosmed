@@ -133,25 +133,6 @@ export const Navbar = () => {
           <Box py={3}>
             <ModalChat />
           </Box>
-
-          <ModalFooter>
-            <Box
-              mr={"auto"}
-              color="green"
-              _hover={{ cursor: "pointer", color: "white" }}
-            >
-              <LuImagePlus size={35} />
-            </Box>
-            <Button
-              colorScheme={"green"}
-              h={"2.4rem"}
-              w={"5rem"}
-              borderRadius={"10px"}
-              mr={2}
-            >
-              Post
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </Box>

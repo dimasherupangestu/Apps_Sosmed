@@ -1,8 +1,8 @@
 import { useToast } from "@chakra-ui/react";
-import { axiosIntelisen } from "../../../../lib/axios";
+import { axiosIntelisen } from "../../../lib/axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import useUser from "../../../User/hook/useUser";
+import useUser from "../../User/hook/useUser";
 
 export const useFollow = () => {
   const token = localStorage.getItem("token");

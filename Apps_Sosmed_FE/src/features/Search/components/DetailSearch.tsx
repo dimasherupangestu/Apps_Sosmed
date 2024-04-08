@@ -88,15 +88,7 @@ export const DetailSearch = () => {
             border={1}
             borderWidth={"1px solid #949494"}
           >
-            <CardUser
-              name={user.name}
-              username={user.username}
-              picture={user.picture}
-              id={user.id}
-              bio={user.bio}
-              following={user.following}
-              followers={user.follower}
-            />
+            <CardUser type="follow" {...user} />
           </Box>
         ))}
         {massage && <Text color="white">Data Not Found</Text>}

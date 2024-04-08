@@ -1,12 +1,10 @@
 import { Box, HStack, Text, useToast } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
-import { useChatUser } from "../Thread/hook/useThread";
-import { axiosIntelisen } from "../../lib/axios";
-import { useReply } from "../Reply/hook/useReply";
 import { useDispatch, useSelector } from "react-redux";
-import { UpdateLike } from "../../store/Slice/getTheadOne";
 import { RootType } from "../../types/storeType";
+import { useReply } from "../Reply/hook/useReply";
+import { useChatUser } from "../Thread/hook/useThread";
 
 interface like {
   isLike: boolean;

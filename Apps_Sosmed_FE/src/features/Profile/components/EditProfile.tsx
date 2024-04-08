@@ -11,7 +11,7 @@ import {
 import React, { useEffect } from "react";
 import { RiImageAddFill } from "react-icons/ri";
 import { useParams } from "react-router-dom";
-import { useProfile } from "../features/Profile/useProfile";
+import { useProfile } from "../hooks/useProfile";
 
 export const EditProfile = () => {
   const { id } = useParams();

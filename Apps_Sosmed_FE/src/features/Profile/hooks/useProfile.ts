@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { axiosIntelisen } from "../../lib/axios";
+import { axiosIntelisen } from "../../../lib/axios";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
-import { RootType } from "../../types/storeType";
+import { RootType } from "../../../types/storeType";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { UPDATE_COVER, UPDATE_Picture } from "../../store/Slice/useSliceUser";
+import {
+  UPDATE_COVER,
+  UPDATE_Picture,
+} from "../../../store/Slice/useSliceUser";
 
 export interface EditUserProps {
   name?: string;

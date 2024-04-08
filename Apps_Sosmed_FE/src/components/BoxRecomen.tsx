@@ -46,12 +46,9 @@ export const BoxRecomen = () => {
               <CardUser
                 id={data.id}
                 refect={refetch}
-                name={data.name}
-                // bio={data.bio}
-                picture={data.picture}
-                username={data.username}
-                follower={data.follower}
-                following={data.following}
+                {...data}
+                bio={undefined}
+                following={undefined}
               />
             </Box>
           ))}

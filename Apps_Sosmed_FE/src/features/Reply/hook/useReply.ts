@@ -15,7 +15,7 @@ export const useReply = () => {
   const getThreadOne = async (id: number, id_user: number) => {
     try {
       const response = await axiosIntelisen.get(`/thread/${id}?id=${id_user}`);
-      // console.log("data", response);
+      // console.log("data", response.data);
       dispatch(GET_THREAD_One({ data: response.data }));
       useGetThread(user);
 
