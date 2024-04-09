@@ -19,7 +19,7 @@ export const HomeCradUsers: React.FC = () => {
   return (
     <Box w={"100%"} h={"100%"}>
       {thread.map((data: any, index: number) => (
-        <CardChat key={index} data={data} />
+        <CardChat key={index} {...data} type="thread" />
       ))}
     </Box>
   );

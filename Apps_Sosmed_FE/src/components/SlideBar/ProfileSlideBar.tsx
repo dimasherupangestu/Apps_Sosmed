@@ -14,11 +14,11 @@ import {
 // import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { axiosIntelisen } from "../lib/axios";
-import { RootType } from "../types/storeType";
+import { axiosIntelisen } from "../../lib/axios";
+import { RootType } from "../../types/storeType";
 import { useEffect } from "react";
 
-import useUser from "../features/User/hook/useUser";
+import useUser from "../../features/User/hook/useUser";
 import { Link } from "react-router-dom";
 
 export const ProfileSlideBar = () => {

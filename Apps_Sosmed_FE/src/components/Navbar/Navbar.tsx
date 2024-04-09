@@ -11,14 +11,15 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { IconNav } from "./IconNav";
+
 import { Link } from "react-router-dom";
 import { LuImagePlus } from "react-icons/lu";
-import { ModalChat } from "../features/Thread/components/ModalChat";
+import { ModalChat } from "../../features/Thread/components/ModalChat";
 import { useRef } from "react";
 import { FaFeatherAlt, FaRegIdCard } from "react-icons/fa";
 import { MdLogin } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
+import { IconNav } from "./IconNav";
 
 export const Navbar = () => {
   const token = localStorage.getItem("token");

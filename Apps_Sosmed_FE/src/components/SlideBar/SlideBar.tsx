@@ -1,7 +1,8 @@
 import { Box } from "@chakra-ui/react";
-import { ProfileSlideBar } from "./ProfileSlideBar";
+
 import { BoxRecomen } from "./BoxRecomen";
-import { Footer } from "./Footer";
+import { Footer } from "../Footer";
+import { ProfileSlideBar } from "./ProfileSlideBar";
 
 export const SlideBar = () => {
   const token = localStorage.getItem("token");

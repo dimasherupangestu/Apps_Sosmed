@@ -37,10 +37,6 @@ export const CardUser = ({ type, ...data }: any) => {
             : { background: "#1A202C" }
         }
         mt={3}
-        // bg={"#1A202C"}
-
-        // px={4}
-        // mb={4}
       >
         <HStack pb={2}>
           <Avatar name={data.name} src={data.picture} />

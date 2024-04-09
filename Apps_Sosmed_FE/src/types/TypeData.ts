@@ -39,7 +39,7 @@ export type Thread = {
   id: number;
   type?: string;
   content: string;
-  image: string | null;
+  image: [] | string | null;
   like?: number | [];
   isLike?: boolean;
   replies: any;

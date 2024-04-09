@@ -9,57 +9,66 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 
-import { useMutation } from "@tanstack/react-query";
+import { axiosIntelisen } from "../../../lib/axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { axiosIntelisen } from "../../../lib/axios";
-import { ChatUserProps, IFrom } from "../../../types/TypeData";
 import { RootType } from "../../../types/storeType";
-import { RiImageAddLine } from "react-icons/ri";
 import { LuImagePlus } from "react-icons/lu";
 
 export const ModalChat = () => {
-  const tost = useToast();
-  const naviget = useNavigate();
+  const toast = useToast();
+  const navigate = useNavigate();
   const user = useSelector((state: RootType) => state.userStore);
   const token = localStorage.getItem("token");
 
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "multipart/form-data",
     },
   };
 
-  const [file, setFile] = useState<IFrom>({
-    content: "",
-    image: null,
-  });
+  const [file, setFile] = useState<File | null>(null);
+  const [content, setContent] = useState<string>("");
 
-  const hendelSubmit = async (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.name;
+    const value =
+      name === "image"
+        ? e.target.files
+          ? e.target.files[0]
+          : null
+        : e.target.value;
+
+    if (name === "image") {
+      setFile(value as File);
+    } else {
+      setContent(value as string);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!file || !content) {
+      // Handle error when file or content is empty
+      return;
+    }
     try {
-      const response = await axiosIntelisen.post("/thread", file, config);
-      // console.log(response);
-      tost({
+      const formData = new FormData();
+      formData.append("content", content);
+      formData.append("image", file);
+      const response = await axiosIntelisen.post("/thread", formData, config);
+      toast({
         title: "Successfully added a post",
         status: "success",
         position: "top",
       });
-      // console.log("tes", response.data);
-      // console.log("file", file);
-      naviget("/");
-      window.location.reload();
+      console.log("tes", response.data);
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
   };
 
-  const { mutate } = useMutation<void, ChatUserProps, any>({
-    mutationFn: async (body): Promise<void> => {
-      await axiosIntelisen.post("/thread", body);
-    },
-  });
   return (
     <Box>
       <Box>
@@ -70,7 +79,7 @@ export const ModalChat = () => {
             name={user.name}
             src={user.picture ? user.picture : user.username}
           />
-          <form onSubmit={hendelSubmit} style={{ width: "100%" }}>
+          <form onSubmit={handleSubmit} style={{ width: "100%" }}>
             <FormControl
               ml={1}
               mt={2}
@@ -84,12 +93,7 @@ export const ModalChat = () => {
                 type="text"
                 w={"100%"}
                 name="content"
-                onChange={(e) =>
-                  setFile((prevFile) => ({
-                    ...prevFile,
-                    content: e.target.value,
-                  }))
-                }
+                onChange={handleChange}
                 placeholder="What is Happening?!"
                 border={"none"}
                 color={"white"}
@@ -97,33 +101,18 @@ export const ModalChat = () => {
             </FormControl>
             <HStack mt={3}>
               <Box
-                mr={"auto"}
-                zIndex={"1"}
                 as="label"
                 htmlFor="image"
-                cursor="pointer"
-                color="green"
-                bg={"#171923"}
-                _hover={{ cursor: "pointer", color: "white" }}
+                style={{ cursor: "pointer", color: "green", background: "red" }}
               >
-                <Box ml={3}>
-                  <LuImagePlus size={"2rem"} />
-                </Box>
+                <LuImagePlus size={"2rem"} />
                 <Input
-                  id="image"
                   type="file"
+                  id="image"
+                  accept="image/png, image/jpeg, image/jpg"
                   name="image"
-                  onChange={(e) =>
-                    setFile((prevFile) => ({
-                      ...prevFile,
-                      image: e.target.files![0],
-                    }))
-                  }
-                  accept="image/jpg, image/jpeg, image/png"
-                  mr={"2rem"}
-                  w={"100%"}
-                  border={"none"}
-                  display={"none"}
+                  onChange={handleChange}
+                  // style={{ display: "none" }}
                 />
               </Box>
               <Button

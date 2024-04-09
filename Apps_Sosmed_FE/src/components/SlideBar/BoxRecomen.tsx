@@ -1,9 +1,9 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { axiosIntelisen } from "../lib/axios";
+import { axiosIntelisen } from "../../lib/axios";
 
-import { AuthorProps } from "../types/TypeData";
-import { CardUser } from "./CardUser";
+import { AuthorProps } from "../../types/TypeData";
+import { CardUser } from "../CardUser";
 
 export const BoxRecomen = () => {
   // const user = useSelector((state: RootType) => state.getUserAll);
@@ -48,7 +48,6 @@ export const BoxRecomen = () => {
                 refect={refetch}
                 {...data}
                 bio={undefined}
-                following={undefined}
               />
             </Box>
           ))}

@@ -2,9 +2,9 @@ import { Box, HStack, Text, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { RootType } from "../../types/storeType";
-import { useReply } from "../Reply/hook/useReply";
-import { useChatUser } from "../Thread/hook/useThread";
+import { RootType } from "../types/storeType";
+import { useReply } from "../features/Reply/hook/useReply";
+import { useChatUser } from "../features/Thread/hook/useThread";
 
 interface like {
   isLike: boolean;

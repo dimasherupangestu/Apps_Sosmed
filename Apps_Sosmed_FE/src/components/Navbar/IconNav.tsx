@@ -5,7 +5,7 @@ import { FaHome } from "react-icons/fa";
 import { MdPersonSearch } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { RootType } from "../types/storeType";
+import { RootType } from "../../types/storeType";
 export const IconNav = () => {
   const userId = useSelector((state: RootType) => state.userStore);
   return (

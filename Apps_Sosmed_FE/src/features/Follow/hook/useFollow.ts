@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/react";
-import { axiosIntelisen } from "../../../lib/axios";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { axiosIntelisen } from "../../../lib/axios";
 import useUser from "../../User/hook/useUser";
 
 export const useFollow = () => {

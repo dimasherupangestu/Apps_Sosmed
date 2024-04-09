@@ -9,20 +9,18 @@ import {
   MenuItem,
   MenuList,
   Text,
-  useToast,
 } from "@chakra-ui/react";
+import { formatDistanceToNow, parseISO } from "date-fns";
 import { useEffect } from "react";
 import { CgComment } from "react-icons/cg";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { SlOptions } from "react-icons/sl";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { useReply } from "../hook/useReply";
-import { Liked } from "../../like/Liked";
-import { axiosIntelisen } from "../../../lib/axios";
-import { RootType } from "../../../types/storeType";
 import { InputStatus } from "../../../components/InputStatus";
-import { formatDistanceToNow, parseISO } from "date-fns";
+import { RootType } from "../../../types/storeType";
+import { Liked } from "../../../components/Liked";
+import { useReply } from "../hook/useReply";
 4;
 
 export const DetailReply = () => {
@@ -123,6 +121,7 @@ export const DetailReply = () => {
           </Box>
         </Box>
         <InputStatus />
+
         {/* reply */}
 
         {threadOne?.replies?.map((item: any) => (
