@@ -26,31 +26,6 @@ export const Login = () => {
   }
   const tost = useToast();
   const dispatch = useDispatch();
-  // const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
-
-  // const hendelLogin = async (e: any) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axiosIntelisen.post("/login", {
-  //       username: username,
-  //       password: password,
-  //     });
-  //     localStorage.setItem("token", response.data.token);
-  //     localStorage.setItem("id", response.data.user.id);
-  //     tost({
-  //       title: "Login Success",
-  //       status: "success",
-  //       isClosable: true,
-  //       position: "top",
-  //     });
-  //     naviget("/");
-
-  //     console.log("login", response);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const { control, handleSubmit } = isValidasi();
   const onSubmit = async (data: { username: string; password: string }) => {
@@ -67,13 +42,19 @@ export const Login = () => {
       naviget("/");
     } catch (error: any) {
       console.log(error);
-      return tost({
+      if (error.response.status === 400) {
+        return tost({
+          title: "login failed",
+          status: "error",
+          description: "username or password is wrong",
+          position: "top",
+        });
+      }
+      tost({
         title: "login failed",
         status: "error",
         description: error.response.data.message || error.message,
         position: "top",
-        isClosable: true,
-        duration: 3000,
       });
     }
   };

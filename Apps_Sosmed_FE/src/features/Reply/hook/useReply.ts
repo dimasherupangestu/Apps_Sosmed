@@ -24,7 +24,58 @@ export const useReply = () => {
       console.log(error);
     }
   };
-  const likeReply = async (id: number) => {
+
+  const hendelLike = async (id: number) => {
+    if (!token) {
+      tost({
+        title: "Please Login first",
+        status: "info",
+        position: "top",
+      });
+      return;
+    }
+    try {
+      const response = await axiosIntelisen.post(
+        `/like/thread/`,
+        { thread: id },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      // console.log("like", response);
+
+      getThreadOne(id, user);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const hendelUnlike = async (id: number) => {
+    if (!token) {
+      tost({
+        title: "Please Login first",
+        status: "info",
+        position: "top",
+      });
+      return;
+    }
+    try {
+      const response = await axiosIntelisen.delete(`/unlike/thread?id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("unlike", response);
+      // useGetThread(user);
+      getThreadOne(id, user);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const likeReply = async (id: number, id_thread: number) => {
     const response = await axiosIntelisen.post(
       "/like/reply",
       { reply: id },
@@ -34,17 +85,19 @@ export const useReply = () => {
         },
       }
     );
+    getThreadOne(id_thread, user);
     dispatch(UpdateLike(response.data));
     console.log(response.data);
   };
 
-  const unlikeReply = async (id: number) => {
+  const unlikeReply = async (id: number, id_thread: number) => {
     try {
       const response = await axiosIntelisen.delete(`/unlike/reply?id=${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+      getThreadOne(id_thread, user);
       console.log("unlike", response.data);
     } catch (error) {
       console.log(error);
@@ -79,6 +132,8 @@ export const useReply = () => {
   };
   return {
     getThreadOne,
+    hendelLike,
+    hendelUnlike,
     likeReply,
     unlikeReply,
     hendelDelete,

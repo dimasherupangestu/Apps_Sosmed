@@ -19,20 +19,18 @@ export const Register = () => {
   }
   const tost = useToast();
 
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+  const [register, setRegister] = useState({
+    name: "",
+    username: "",
+    password: "",
+  });
   const naviget = useNavigate();
   if (localStorage.getItem("token")) {
     return (window.location.href = "/");
   }
   const hendelLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const response = await axiosIntelisen.post("/register", {
-      name: name,
-      username: username,
-      password: password,
-    });
+    const response = await axiosIntelisen.post("/register", register);
 
     tost({
       title: "Register Success",
@@ -71,22 +69,28 @@ export const Register = () => {
         </Text> */}
           <Stack mt={4} spacing={4}>
             <InputElement
-              name={name}
+              name={"register.name"}
               type="type"
               placeholder="Full Name"
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) =>
+                setRegister({ ...register, name: e.target.value })
+              }
             />
             <InputElement
-              name={username}
+              name={"username"}
               type="text"
               placeholder="Username"
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) =>
+                setRegister({ ...register, username: e.target.value })
+              }
             />
             <InputElement
-              name={password}
+              name={"password"}
               type="password"
               placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) =>
+                setRegister({ ...register, password: e.target.value })
+              }
             />
             <Button onClick={hendelLogin}>Register</Button>
             <HStack pb={3}>

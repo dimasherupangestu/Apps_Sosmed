@@ -21,15 +21,25 @@ import { InputStatus } from "../../../components/InputStatus";
 import { RootType } from "../../../types/storeType";
 import { Liked } from "../../../components/Liked";
 import { useReply } from "../hook/useReply";
+import { AiFillHeart } from "react-icons/ai";
+import { useChatUser } from "../../Thread/hook/useThread";
 4;
 
 export const DetailReply = () => {
   const { id } = useParams();
   const token = localStorage.getItem("token");
-  const { getThreadOne, hendelDelete } = useReply();
+  const {
+    getThreadOne,
+    hendelDelete,
+    hendelUnlike,
+    hendelLike,
+    likeReply,
+    unlikeReply,
+  } = useReply();
 
   const user = useSelector((state: RootType) => state.userStore);
   const threadOne = useSelector((state: RootType) => state.GetIdThread.data);
+  console.log("threadOne", threadOne);
   // console.log("theadAll", theadAll);
 
   useEffect(() => {
@@ -101,12 +111,41 @@ export const DetailReply = () => {
               {threadOne?.image && <Image src={threadOne.image} />}
             </HStack>
             <HStack mt={2} pb={3}>
-              <Liked
-                isLike={threadOne.islike}
-                likes={threadOne.likes.length}
-                id={threadOne.id}
-                typeLike="thread"
-              />
+              {!threadOne.islike ? (
+                <HStack>
+                  <Box
+                    onClick={() => hendelLike(threadOne.id)}
+                    color="white"
+                    _hover={{ color: "red", cursor: "pointer" }}
+                  >
+                    <AiFillHeart size={23} />
+                  </Box>
+                  <Text
+                    color={"rgba(255, 255, 255, 0.48)"}
+                    fontSize={["0.7rem", "0.8rem"]}
+                  >
+                    {threadOne?.likes.length}
+                    {/* {threadOne.} */}
+                  </Text>
+                </HStack>
+              ) : (
+                <HStack>
+                  <Box
+                    onClick={() => hendelUnlike(threadOne.id)}
+                    color="red"
+                    _hover={{ color: "white", cursor: "pointer" }}
+                  >
+                    <AiFillHeart size={23} />
+                  </Box>
+                  <Text
+                    color={"rgba(255, 255, 255, 0.48)"}
+                    fontSize={["0.7rem", "0.8rem"]}
+                  >
+                    {threadOne?.likes.length}
+                    {/* {data.} */}
+                  </Text>
+                </HStack>
+              )}
 
               <Box color="white" _hover={{ color: "green", cursor: "pointer" }}>
                 <CgComment size={23} />
@@ -193,12 +232,41 @@ export const DetailReply = () => {
                     {item?.image && <Image src={item.image} />}
                   </HStack>
                   <HStack mt={2} pb={3}>
-                    <Liked
-                      isLike={item.isLiked}
-                      likes={item.likes}
-                      typeLike="reply"
-                      idReply={item.id}
-                    />
+                    {!item.isLiked ? (
+                      <HStack>
+                        <Box
+                          onClick={() => likeReply(item.id, threadOne.id)}
+                          color="white"
+                          _hover={{ color: "red", cursor: "pointer" }}
+                        >
+                          <AiFillHeart size={23} />
+                        </Box>
+                        <Text
+                          color={"rgba(255, 255, 255, 0.48)"}
+                          fontSize={["0.7rem", "0.8rem"]}
+                        >
+                          {item?.likes}
+                          {/* {item.} */}
+                        </Text>
+                      </HStack>
+                    ) : (
+                      <HStack>
+                        <Box
+                          onClick={() => unlikeReply(item.id, threadOne.id)}
+                          color="red"
+                          _hover={{ color: "white", cursor: "pointer" }}
+                        >
+                          <AiFillHeart size={23} />
+                        </Box>
+                        <Text
+                          color={"rgba(255, 255, 255, 0.48)"}
+                          fontSize={["0.7rem", "0.8rem"]}
+                        >
+                          {item.likes}
+                          {/* {data.} */}
+                        </Text>
+                      </HStack>
+                    )}
                   </HStack>
                 </Box>
               </Box>

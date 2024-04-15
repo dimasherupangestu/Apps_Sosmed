@@ -27,8 +27,8 @@ export const useProfile = () => {
   const [user, setUser] = useState<EditUserProps>();
   const [profile, setProfile] = useState<any>(null);
   const [cover, setCover] = useState<any>(null);
-  console.log("cover", cover);
-  console.log("profile", profile);
+  // console.log("cover", cover);
+  // console.log("profile", profile);
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
   const [coverPhoto, setCoverPhoto] = useState<File | null>(null);
   const val = !userLogin.bio ? "" : userLogin.bio;

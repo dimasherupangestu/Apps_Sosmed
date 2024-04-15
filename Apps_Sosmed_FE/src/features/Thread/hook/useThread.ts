@@ -3,14 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { axiosIntelisen } from "../../../lib/axios";
 import { GET_THREAD } from "../../../store/Slice/useSliceThered";
 import { RootType } from "../../../types/storeType";
+import { useReply } from "../../Reply/hook/useReply";
+import { useParams } from "react-router-dom";
 
 export const useChatUser = () => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
-
+  // const { id } = useParams();
   const tost = useToast();
 
   const user = useSelector((state: RootType) => state.userStore.id);
+  // const { getThreadOne } = useReply();
   const useGetThread = async (id: number) => {
     try {
       const response = await axiosIntelisen.get(`/thread?id=${id}`);
@@ -42,7 +45,10 @@ export const useChatUser = () => {
         }
       );
       // console.log("like", response);
+
       useGetThread(user);
+
+      // getThreadOne(id, user);
     } catch (err) {
       console.log(err);
     }

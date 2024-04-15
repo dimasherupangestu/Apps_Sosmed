@@ -4,10 +4,11 @@ import { DetailStatusPages } from "./pages/DetailStatusPages";
 import { EditProfilePage } from "./pages/EditProfilePages";
 import { FollowerPage } from "./pages/FollowerPage";
 import { Home } from "./pages/Home";
-import { Login } from "./pages/Login";
+
 import { ProlifePages } from "./pages/ProlifePages";
 import { Register } from "./pages/Register";
 import { Search } from "./pages/Search";
+import { Login } from "./pages/LoginPages";
 
 function App() {
   return (
