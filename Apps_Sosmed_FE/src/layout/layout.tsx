@@ -40,7 +40,6 @@ export const Layout = ({ children }: layoutProps) => {
         <Flex
           w={"100%"}
           h={"100%"}
-          // bg={"yellow"}
           pos={"relative"}
           maxHeight={"revert-layer"}
           borderLeft={"1px solid #555"}
@@ -49,14 +48,11 @@ export const Layout = ({ children }: layoutProps) => {
             w={{ base: "100%", md: "100%", lg: "64%", xl: "65%" }}
             h={"100%"}
             maxHeight={"revert-layer"}
-
-            // borderLeft={{ base: "none", md: "1px solid #555" }}
           >
             {children}
           </Box>
           <Box
             w={{ base: "0px", md: "0px", lg: "37%", xl: "35%" }}
-            // bg={"yellow"}
             pos={"relative"}
             maxHeight={"revert-layer"}
             overflow={"hidden"}

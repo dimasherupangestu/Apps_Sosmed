@@ -1,6 +1,5 @@
-import { Text } from "@chakra-ui/react";
-import { Layout } from "../layout/layout";
 import { HomeChat } from "../features/Thread/components/HomeChat";
+import { Layout } from "../layout/layout";
 
 export const Home = () => {
   return (

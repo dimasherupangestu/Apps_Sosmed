@@ -4,11 +4,11 @@ import { User } from "./entity/User";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
-  host: "localhost",
-  port: 5432,
+  host: "monorail.proxy.rlwy.net",
+  port: 19339,
   username: "postgres",
-  password: "siswanto",
-  database: "AppSosmed",
+  password: "ArmHFykDXZBxTDaSxtCIBPCPoggSeZjR",
+  database: "railway",
   synchronize: true,
   logging: false,
   entities: ["src/entity/*.ts"],

@@ -8,10 +8,7 @@ import { useChatUser } from "../hook/useThread";
 export const HomeCradUsers: React.FC = () => {
   const thread = useSelector((state: RootType) => state.GetThread.data);
   const user = useSelector((state: RootType) => state.userStore);
-
-  // const tost = useToast();
-  const { useGetThread, hendelLike, hendelDelete, hendelUnlike } =
-    useChatUser();
+  const { useGetThread } = useChatUser();
 
   useEffect(() => {
     useGetThread(user.id);

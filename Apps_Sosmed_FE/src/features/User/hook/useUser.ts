@@ -13,7 +13,7 @@ const useUser = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      // console.log(response);
+
       dispatch(USER_ID(response.data));
     } catch (error) {
       console.log("error", error);

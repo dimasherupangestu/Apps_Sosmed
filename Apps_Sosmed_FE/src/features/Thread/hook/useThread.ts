@@ -9,18 +9,14 @@ import { useParams } from "react-router-dom";
 export const useChatUser = () => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
-  // const { id } = useParams();
   const tost = useToast();
 
   const user = useSelector((state: RootType) => state.userStore.id);
-  // const { getThreadOne } = useReply();
+
   const useGetThread = async (id: number) => {
     try {
       const response = await axiosIntelisen.get(`/thread?id=${id}`);
       dispatch(GET_THREAD({ data: response.data }));
-
-      // dispatch(Fetch_Thread(useGetThread(id)));
-      // console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -35,7 +31,7 @@ export const useChatUser = () => {
       return;
     }
     try {
-      const response = await axiosIntelisen.post(
+      await axiosIntelisen.post(
         `/like/thread/`,
         { thread: id },
         {
@@ -44,22 +40,11 @@ export const useChatUser = () => {
           },
         }
       );
-      // console.log("like", response);
 
       useGetThread(user);
-
-      // getThreadOne(id, user);
     } catch (err) {
       console.log(err);
     }
-    // if (!token) {
-    //   tost({
-    //     title: "Please Login first",
-    //     status: "info",
-    //     position: "top",
-    //   });
-    //   return;
-    // }
   };
 
   const hendelUnlike = async (id: number) => {

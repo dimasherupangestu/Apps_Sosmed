@@ -7,10 +7,9 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import InputElement from "../components/InputElement";
-import { BottomElement } from "../components/BottomElement";
-import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import InputElement from "../components/InputElement";
 import { axiosIntelisen } from "../lib/axios";
 
 export const Register = () => {
@@ -64,9 +63,7 @@ export const Register = () => {
           <Text color={"white"} fontSize={"xl"} fontWeight={600}>
             Create Account Circle
           </Text>
-          {/* <Text color={"white"} mb="8px">
-          Value: {value}
-        </Text> */}
+
           <Stack mt={4} spacing={4}>
             <InputElement
               name={"register.name"}

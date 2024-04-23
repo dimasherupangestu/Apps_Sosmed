@@ -10,14 +10,11 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import InputElement from "../components/InputElement";
-
-import { Link, useNavigate } from "react-router-dom";
-import { axiosIntelisen } from "../lib/axios";
-import { useDispatch } from "react-redux";
-import { isValidasi } from "../features/User/hook/isValidasi";
 import { Controller } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import InputElement from "../components/InputElement";
+import { isValidasi } from "../features/User/hook/isValidasi";
+import { axiosIntelisen } from "../lib/axios";
 
 export const Login = () => {
   const naviget = useNavigate();
@@ -25,7 +22,6 @@ export const Login = () => {
     return (window.location.href = "/");
   }
   const tost = useToast();
-  const dispatch = useDispatch();
 
   const { control, handleSubmit } = isValidasi();
   const onSubmit = async (data: { username: string; password: string }) => {
