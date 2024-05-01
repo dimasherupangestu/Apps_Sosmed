@@ -55,7 +55,7 @@ export const Login = () => {
     }
   };
   return (
-    <Box bg={"#171923"} h={"100vh"} w={""}>
+    <Box bg={"#171923"} h={"100vh"} w={"100%"}>
       <Box pt={20}>
         <Box
           w={"md"}

@@ -12,7 +12,6 @@ export const useSliceThered = createSlice({
   reducers: {
     GET_THREAD: (state, action) => {
       state.data = action.payload.data;
-      // console.log(action);
     },
   },
 });

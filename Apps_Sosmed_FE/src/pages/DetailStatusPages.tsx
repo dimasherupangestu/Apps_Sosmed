@@ -1,6 +1,5 @@
-import { useParams } from "react-router-dom";
-import { Layout } from "../layout/layout";
 import { DetailReply } from "../features/Reply/components/DetailReply";
+import { Layout } from "../layout/layout";
 
 export const DetailStatusPages = () => {
   return (

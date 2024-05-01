@@ -26,7 +26,6 @@ export const useSliceTheredOne = createSlice({
   reducers: {
     GET_THREAD_One: (state, action) => {
       state.data = action.payload.data;
-      // console.log("tes", action.payload.data);
     },
     UpdateLike: (state, action) => {
       state.data.islike = action.payload;

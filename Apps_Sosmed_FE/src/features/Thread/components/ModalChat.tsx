@@ -20,52 +20,55 @@ export const ModalChat = () => {
   const navigate = useNavigate();
   const user = useSelector((state: RootType) => state.userStore);
   const token = localStorage.getItem("token");
+  const [isloding, setIsloding] = useState(false);
 
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
     },
   };
 
   const [file, setFile] = useState<File | null>(null);
+  console.log("file", file);
   const [content, setContent] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const name = e.target.name;
-    const value =
-      name === "image"
-        ? e.target.files
-          ? e.target.files[0]
-          : null
-        : e.target.value;
-
-    if (name === "image") {
-      setFile(value as File);
-    } else {
-      setContent(value as string);
+    const { name, value } = e.target;
+    if (name === "content") {
+      setContent(value);
+    } else if (name === "gambar") {
+      setFile(e.target.files?.[0] || null);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file || !content) {
-      // Handle error when file or content is empty
-      return;
-    }
+
+    setIsloding(true);
     try {
       const formData = new FormData();
       formData.append("content", content);
-      formData.append("image", file);
+      formData.append("image", file as any);
       const response = await axiosIntelisen.post("/thread", formData, config);
       toast({
         title: "Successfully added a post",
         status: "success",
         position: "top",
       });
-      console.log("tes", response.data);
+      console.log(response);
       navigate("/");
+      window.location.reload();
     } catch (err) {
       console.log(err);
+      toast({
+        title: "Failed to add a post",
+        description: "Something went wrong",
+        status: "error",
+        position: "top",
+      });
+    } finally {
+      setIsloding(false);
     }
   };
 
@@ -102,17 +105,17 @@ export const ModalChat = () => {
             <HStack mt={3}>
               <Box
                 as="label"
-                htmlFor="image"
-                style={{ cursor: "pointer", color: "green", background: "red" }}
+                htmlFor="gambar"
+                style={{ cursor: "pointer", color: "green" }}
               >
                 <LuImagePlus size={"2rem"} />
                 <Input
+                  name="gambar"
+                  id="gambar"
                   type="file"
-                  id="image"
                   accept="image/png, image/jpeg, image/jpg"
-                  name="image"
                   onChange={handleChange}
-                  // style={{ display: "none" }}
+                  display={"none"}
                 />
               </Box>
               <Button
@@ -122,6 +125,7 @@ export const ModalChat = () => {
                 type="submit"
                 borderRadius={"10px"}
                 mr={2}
+                isLoading={isloding}
               >
                 Post
               </Button>
