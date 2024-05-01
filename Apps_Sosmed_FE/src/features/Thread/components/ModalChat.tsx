@@ -124,6 +124,7 @@ export const ModalChat = () => {
                 w={"5rem"}
                 type="submit"
                 borderRadius={"10px"}
+                ml={"auto"}
                 mr={2}
                 isLoading={isloding}
               >
